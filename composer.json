@@ -1,0 +1,30 @@
+{
+  "name": "team-acaisia/php-cpu-features",
+  "description": "A PHP class to hold information on CPU features",
+  "homepage": "https://github.com/team-acaisia/php-cpu-features",
+  "license": "MIT",
+  "require": {
+    "php": "^8.2",
+    "brick/math": "^0.11.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Acaisia\\CpuFeatures\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Acaisia\\CpuFeatures\\Tests\\": "tests"
+    }
+  },
+  "authors": [
+    {
+      "name": "Rob Quist",
+      "email": "support@acaisia.com",
+      "homepage": "https://acaisia.com/"
+    }
+  ]
+}
