@@ -155,7 +155,7 @@ $template = file_get_contents('./enum.tmpl.php');
 
 /// Template variables to parse
 const REPL_CASES = '    case TEMPLATE_CASES = "TEMPLATE";';
-const HIDDEN_FUNCTION = '    public function getHidden(): bool { return false; }';
+const HIDDEN_FUNCTION = '    public function isHidden(): bool { return false; }';
 const DESCRIPTION_FUNCTION = '    public function getDescription(): string { return ""; }';
 const MAP_BIT = '    private const MAP_BIT = [Kernel::v5_0->value => [self::TEMPLATE_CASES->value => 1]];';
 const MAP_WORD = '    private const MAP_WORD = [Kernel::v5_0->value => [self::TEMPLATE_CASES->value => 1]];';
@@ -164,7 +164,7 @@ const MAP_WORD = '    private const MAP_WORD = [Kernel::v5_0->value => [self::TE
 $replacements[REPL_CASES] = '';
 
 $replacements[HIDDEN_FUNCTION] = <<<PHP
-    public function getHidden(): bool {
+    public function isHidden(): bool {
         return match (\$this) {
 
 PHP;

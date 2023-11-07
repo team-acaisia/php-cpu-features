@@ -23,10 +23,13 @@ enum Feature: string {
 
     /**
      * This returns the string version of the enum, as used in `/proc/cpuinfo`
-     * @return string
+     * @return null|string
      */
-    public function getCpuinfoString(): string
+    public function getCpuinfoString(): ?string
     {
+        if ($this->isHidden()) {
+            return null;
+        }
         return $this->value;
     }
 
@@ -60,7 +63,7 @@ enum Feature: string {
         return $map[$this->value][$kernel->value];
     }
 
-    public function getHidden(): bool { return false; }
+    public function isHidden(): bool { return false; }
 
     public function getDescription(): string { return ""; }
 

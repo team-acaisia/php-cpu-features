@@ -393,10 +393,13 @@ enum Feature: string {
 
     /**
      * This returns the string version of the enum, as used in `/proc/cpuinfo`
-     * @return string
+     * @return null|string
      */
-    public function getCpuinfoString(): string
+    public function getCpuinfoString(): ?string
     {
+        if ($this->isHidden()) {
+            return null;
+        }
         return $this->value;
     }
 
@@ -430,7 +433,7 @@ enum Feature: string {
         return $map[$this->value][$kernel->value];
     }
 
-    public function getHidden(): bool {
+    public function isHidden(): bool {
         return match ($this) {
             self::X86_FPU => false,
             self::X86_VME => false,

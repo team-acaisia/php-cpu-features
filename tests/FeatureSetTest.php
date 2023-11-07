@@ -44,6 +44,37 @@ final class FeatureSetTest extends AbstractTestCase
         }
     }
 
+
+    public function testHiddenSingle() {
+        $featureSet = FeatureSet::createFromString(Kernel::v6_6, Feature::X86_K8->value);
+        $this->assertTrue(Feature::X86_K8->isHidden());
+
+        $this->assertSame('k8', Feature::X86_K8->value);
+        $this->assertSame(null, Feature::X86_K8->getCpuinfoString());
+
+        $this->assertSame([Feature::X86_K8], $featureSet->toArray());
+        $this->assertSame([], $featureSet->toLinuxStringArray());
+        $this->assertSame('', $featureSet->toLinuxString());
+    }
+
+    public function testHiddenNotShown() {
+        $featureSet = FeatureSet::createFromStringArray(
+            Kernel::v6_6,
+            array_map(fn (Feature $fn) => $fn->value, Feature::cases()) // Create from value string (so all are there)
+        );
+
+        $completeString = $featureSet->toLinuxString();
+        $completeStringArray = $featureSet->toLinuxStringArray();
+
+        foreach (Feature::cases() as $feature) {
+            if ($feature->isHidden()) {
+                // For this testcase we're just taking a guess that the first and last units are not hidden :)
+                $this->assertStringNotContainsString(' ' . $feature->value . ' ', $completeString);
+                $this->assertNotContains($feature->value, $completeStringArray);
+            }
+        }
+    }
+
     /**
      * @dataProvider provideAllFeatures
      */

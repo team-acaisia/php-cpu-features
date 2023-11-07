@@ -65,7 +65,10 @@ class FeatureSet {
      */
     public function toLinuxStringArray(): array
     {
-        return array_map(fn (Feature $feature) => $feature->value, $this->features);
+        return array_filter(
+            array_map(fn (Feature $feature) => $feature->getCpuinfoString(), $this->features), // Build array
+            fn (?string $entry) => $entry !== null // Filter out null
+        );
     }
 
     /**
