@@ -30,6 +30,9 @@ jobs:
       - name: Run PHPUnit + Coverage
         run: vendor/bin/phpunit --coverage-clover ./coverage.xml
 
+      - name: Run Benchmark
+        run: vendor/bin/phpbench run --report=aggregate --iterations=10 --tag=original
+
       - name: Upload code coverage to Codecov
         uses: codecov/codecov-action@v2
         with:

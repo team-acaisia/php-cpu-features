@@ -15,7 +15,8 @@ class FeatureSet {
     private Kernel $kernel;
     private array $features = [];
 
-    private function __construct() {
+    private function __construct()
+    {
     }
 
     /**
@@ -25,7 +26,14 @@ class FeatureSet {
      */
     public static function createFromString(Kernel $kernel, string $features): self
     {
+        $self = new self();
+        $self->kernel = $kernel;
 
+        foreach (explode(' ', $features) as $ftr) {
+            $self->features[] = Feature::from($ftr);
+        }
+
+        return $self;
     }
 
     /**
@@ -35,27 +43,51 @@ class FeatureSet {
      */
     public static function createFromStringArray(Kernel $kernel, array $features): self
     {
+        $self = new self();
+        $self->kernel = $kernel;
+        foreach ($features as $ftr) {
+            $self->features[] = Feature::from($ftr);
+        }
 
+        return $self;
     }
 
     /**
      * @return string Formatted in the form of "fpu vme de msr" etc.
      */
-    public function toLinuxString(): string {
-
+    public function toLinuxString(): string
+    {
+        return implode(' ', $this->toLinuxStringArray());
     }
 
     /**
      * @return string Formatted in the form of ["fpu", "vme", (...)] etc.
      */
-    public function toLinuxStringArray(): array {
-
+    public function toLinuxStringArray(): array
+    {
+        return array_map(fn (Feature $feature) => $feature->value, $this->features);
     }
 
     /**
      * @return string Formatted in the form of [Feature::X86_FEATURE_FPU] etc.
      */
-    public function toArray(): array {
+    public function toArray(): array
+    {
+        return $this->features;
+    }
 
+    public function hasFeature(Feature $feature): bool
+    {
+        return in_array($feature, $this->features);
+    }
+
+    public function doesNotHaveFeature(Feature $feature): bool
+    {
+        return !$this->hasFeature($feature);
+    }
+
+    public function getKernel(): Kernel
+    {
+        return $this->kernel;
     }
 }
