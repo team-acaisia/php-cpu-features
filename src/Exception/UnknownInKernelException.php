@@ -4,5 +4,5 @@ declare(strict_types=1);
 
 namespace Acaisia\CpuFeatures\Exception;
 
-class UnknownInKernelException extends \InvalidArgumentException {
+class UnknownInKernelException extends UnknownException {
 }

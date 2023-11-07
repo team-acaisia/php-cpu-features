@@ -63,12 +63,12 @@ class FeatureBench
     /**
      * @ParamProviders("provideSomeFeatures")
      */
-    public function benchGetBin(array $data)
+    public function benchGetBit(array $data)
     {
         /** @var Feature $feature */
         $feature = $data[1];
-        $feature->getBit(Kernel::v5_0);
-        $feature->getWord(Kernel::v5_0);
+        $feature->getBit(Kernel::v6_0);
+        $feature->getWord(Kernel::v6_0);
     }
 
     public function provideArray(): \Generator
