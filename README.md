@@ -7,7 +7,7 @@
 [![Total Downloads](https://poser.pugx.org/team-acaisia/php-cpu-features/downloads)](https://packagist.org/packages/team-acaisia/php-cpu-features)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-> A simple PHP Library to support byte arrays
+> A simple PHP Library to work with the Linux native CPU Features (as well as some kernel information)
 
 ## Table of Contents
 
