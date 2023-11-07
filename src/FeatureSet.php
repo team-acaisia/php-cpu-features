@@ -26,7 +26,14 @@ class FeatureSet {
      */
     public static function createFromString(Kernel $kernel, string $features): self
     {
-        return new self();
+        $self = new self();
+        $self->kernel = $kernel;
+
+        foreach (explode(' ', $features) as $ftr) {
+            $self->features[] = Feature::from($ftr);
+        }
+
+        return $self;
     }
 
     /**
@@ -36,7 +43,13 @@ class FeatureSet {
      */
     public static function createFromStringArray(Kernel $kernel, array $features): self
     {
-        return new self();
+        $self = new self();
+        $self->kernel = $kernel;
+        foreach ($features as $ftr) {
+            $self->features[] = Feature::from($ftr);
+        }
+
+        return $self;
     }
 
     /**
@@ -44,7 +57,7 @@ class FeatureSet {
      */
     public function toLinuxString(): string
     {
-        return '';
+        return implode(' ', $this->toLinuxStringArray());
     }
 
     /**
@@ -52,7 +65,7 @@ class FeatureSet {
      */
     public function toLinuxStringArray(): array
     {
-        return [];
+        return array_map(fn (Feature $feature) => $feature->value, $this->features);
     }
 
     /**
@@ -60,7 +73,7 @@ class FeatureSet {
      */
     public function toArray(): array
     {
-        return [];
+        return $this->features;
     }
 
     public function hasFeature(Feature $feature): bool

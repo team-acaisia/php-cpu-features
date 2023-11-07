@@ -15,4 +15,17 @@ final class FeatureSetTest extends AbstractTestCase
         $this->assertSame(AbstractTestCase::EXAMPLE_STRING, $featureSet->toLinuxString());
         $this->assertSame(AbstractTestCase::EXAMPLE_KERNEL, $featureSet->getKernel());
     }
+
+    public function testFromArrayString() {
+        $arrayString = explode(" ", AbstractTestCase::EXAMPLE_STRING);
+
+        $featureSet = FeatureSet::createFromStringArray(
+            AbstractTestCase::EXAMPLE_KERNEL,
+            $arrayString
+        );
+
+        $this->assertSame($arrayString, $featureSet->toLinuxStringArray());
+        $this->assertSame(AbstractTestCase::EXAMPLE_STRING, $featureSet->toLinuxString());
+        $this->assertSame(AbstractTestCase::EXAMPLE_KERNEL, $featureSet->getKernel());
+    }
 }
