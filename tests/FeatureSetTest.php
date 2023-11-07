@@ -72,6 +72,10 @@ final class FeatureSetTest extends AbstractTestCase
                 $this->assertStringNotContainsString(' ' . $feature->value . ' ', $completeString);
                 $this->assertNotContains($feature->value, $completeStringArray);
             }
+
+            // Test has feature and other
+            $this->assertTrue($featureSet->hasFeature($feature));
+            $this->assertFalse($featureSet->doesNotHaveFeature($feature));
         }
     }
 
