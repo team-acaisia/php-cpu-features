@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace Acaisia\CpuFeatures;
 
-use Acaisia\CpuFeatures\Exception\UnknownException;
-use Acaisia\CpuFeatures\Exception\UnknownBitException;
 use Acaisia\CpuFeatures\Exception\UnknownInKernelException;
-use Acaisia\CpuFeatures\Exception\UnknownKernelException;
-use Acaisia\CpuFeatures\Exception\UnknownWordException;
 
 /**
  * A set of CPU features and their word + offset + description per kernel version
@@ -412,7 +408,7 @@ enum Feature: string {
      */
     public function getWord(Kernel $kernel): int
     {
-        return $this->returnFromMap(self::MAP_WORD, $kernel, UnknownWordException::class);
+        return $this->returnFromMap(self::MAP_WORD, $kernel);
     }
 
     /**
@@ -423,14 +419,11 @@ enum Feature: string {
      */
     public function getBit(Kernel $kernel): int
     {
-        return $this->returnFromMap(self::MAP_BIT, $kernel, UnknownBitException::class);
+        return $this->returnFromMap(self::MAP_BIT, $kernel);
     }
 
-    private function returnFromMap(array $map, Kernel $kernel, string $exception): int
+    private function returnFromMap(array $map, Kernel $kernel): int
     {
-        if (!array_key_exists($this->value, $map)) {
-            throw new $exception('The value ' . $this->value . ' is not known');
-        }
         if (!array_key_exists($kernel->value, $map[$this->value])) {
             throw new UnknownInKernelException('The feature ' . $this->value . ' is not known in kernel ' . $kernel->value);
         }

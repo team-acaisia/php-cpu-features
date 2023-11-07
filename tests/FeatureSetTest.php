@@ -39,6 +39,7 @@ final class FeatureSetTest extends AbstractTestCase
             $value = $actualArray[$i];
             $this->assertSame(Feature::from($key), $value);
             $this->assertSame(Arch::X86, $value->getArch());
+            $this->assertSame($key, $value->getCpuinfoString());
             $i++;
         }
     }

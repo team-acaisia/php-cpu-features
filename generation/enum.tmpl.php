@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Acaisia\CpuFeatures;
 
 use Acaisia\CpuFeatures\Exception\UnknownInKernelException;
-use Acaisia\CpuFeatures\Exception\UnknownKernelException;
 
 /**
  * A set of CPU features and their word + offset + description per kernel version
@@ -53,21 +52,12 @@ enum Feature: string {
         return $this->returnFromMap(self::MAP_BIT, $kernel);
     }
 
-    /**
-     * @todo check if this hashmap lookup is indeed faster than 2 nested switch statements
-     *   - also take into consideration, memory & loading times - the hashmaps are rather big
-     */
     private function returnFromMap(array $map, Kernel $kernel): int
     {
-        if (!array_key_exists($kernel->value, $map)) {
-            // This should never happen
-            throw new UnknownKernelException('The kernel ' . $kernel->value . ' is not known');
-        }
-        if (!array_key_exists($this->value, $map[$kernel->value])) {
+        if (!array_key_exists($kernel->value, $map[$this->value])) {
             throw new UnknownInKernelException('The feature ' . $this->value . ' is not known in kernel ' . $kernel->value);
         }
-
-        return $map[$kernel->value][$this->value];
+        return $map[$this->value][$kernel->value];
     }
 
     public function getHidden(): bool { return false; }
