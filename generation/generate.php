@@ -16,6 +16,9 @@ const DEBUG = false;
 // This regex parses the source code;
 $regex = '~^#define X86_FEATURE_([0-9A-Z_]+)\s*\(\s*([0-9]+)\*32\+\s*([0-9]+)\)\s*\/\*\s(\"[a-z0-9_]*\")*(.*)\*\/$~m';
 
+// This one just does the comments for the groups
+$regexGroups = '~^\/\*\s((.*)\,\s+word\s+([0-9]+))\s\*\/$~m';
+
 $kernels = [];
 $features = [];
 
@@ -50,6 +53,22 @@ function getData(Kernel $kernel) {
     return $data;
 }
 
+// First create the "groups", but its just extra info, so we'll take the latest kernel we know for that info;
+$data = getData(Kernel::cases()[0]);
+// First match the groups
+$groupMatches = [];
+preg_match_all($regexGroups, $data, $groupMatches, PREG_SET_ORDER);
+
+// Now sort them in a simple "group" array
+$groupText = [];
+foreach ($groupMatches as $group) {
+    $groupText[(int) $group[3]] = $group[2];
+}
+
+// I know this is lame, but I don't feel like writing more parsing, so 11 and 7 get their own description here;
+$groupText[7] = 'Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc.';
+$groupText[11] = 'Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc.';
+
 foreach (array_reverse(Kernel::cases()) as $kernel) {
     $data = getData($kernel);
 
@@ -61,6 +80,8 @@ foreach (array_reverse(Kernel::cases()) as $kernel) {
         echo "====== KERNEL " . $kernel->name . "\n";
         echo "    Word\tBit\tName\t\t\t\t\t\tDescription\n";
     }
+
+
     $unique = 0;
     foreach ($matches as list($line, $featureString, $word, $bit, $display, $description)) {
         $description = trim($description);
@@ -151,7 +172,7 @@ if (DEBUG) {
 echo ' Total unique feature flags: ' . count($features) . PHP_EOL;
 echo 'Generating main feature flag enum file...';
 
-$template = file_get_contents('./enum.tmpl.php');
+$template = file_get_contents(__DIR__ . '/enum.tmpl.php');
 
 /// Template variables to parse
 const REPL_CASES = '    case TEMPLATE_CASES = "TEMPLATE";';
@@ -187,10 +208,22 @@ PHP;
  * @var string $key
  * @var Feature[] $featureArray
  */
+$previousGroup = null;
 foreach ($features as $key => $featureArray) {
-    $replacements[REPL_CASES] .= sprintf('    case X86_%s = "%s"; // %s' . "\n", strtoupper($key), $featureArray[array_key_last($featureArray)]->display, $featureArray[array_key_last($featureArray)]->description);
-    $replacements[HIDDEN_FUNCTION] .= sprintf('            self::X86_%s => %s,' . "\n", strtoupper($key), $featureArray[array_key_last($featureArray)]->hidden ? 'true' : 'false');
-    $replacements[DESCRIPTION_FUNCTION] .= sprintf('            self::X86_%s => \'%s\',' . "\n", strtoupper($key), str_replace('\'', '\\\'', $featureArray[array_key_last($featureArray)]->description));
+    $current = $featureArray[array_key_last($featureArray)];
+    if ($previousGroup != $current->word) {
+        // Add some "group" information
+        $previousGroup = $current->word;
+        $replacements[REPL_CASES] .= "\n" . '    /* ' . $groupText[$previousGroup] . ' */' . "\n";
+        $replacements[HIDDEN_FUNCTION] .= "\n" . '            /* ' . $groupText[$previousGroup] . ' */' . "\n";
+        $replacements[DESCRIPTION_FUNCTION] .= "\n" . '            /* ' . $groupText[$previousGroup] . ' */' . "\n";
+        $replacements[MAP_BIT] .= "\n" . '        /* ' . $groupText[$previousGroup] . ' */' . "\n";
+        $replacements[MAP_WORD] .= "\n" . '        /* ' . $groupText[$previousGroup] . ' */' . "\n";
+    }
+
+    $replacements[REPL_CASES] .= sprintf('    case X86_%s = "%s"; // %s' . "\n", strtoupper($key), $current->display, $current->description);
+    $replacements[HIDDEN_FUNCTION] .= sprintf('            self::X86_%s => %s,' . "\n", strtoupper($key), $current->hidden ? 'true' : 'false');
+    $replacements[DESCRIPTION_FUNCTION] .= sprintf('            self::X86_%s => \'%s\',' . "\n", strtoupper($key), str_replace('\'', '\\\'', $current->description));
 
     $replacements[MAP_BIT] .= sprintf('        self::X86_%s->value => [' . "\n", strtoupper($key));
     foreach ($featureArray as $kernel => $feature) {

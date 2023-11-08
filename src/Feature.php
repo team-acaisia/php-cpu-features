@@ -40,6 +40,8 @@ enum Feature: string {
     case X86_ACC = "tm"; // Automatic clock control
     case X86_IA64 = "ia64"; // IA-64 processor
     case X86_PBE = "pbe"; // Pending Break Enable
+
+    /* AMD-defined CPU features, CPUID level 0x80000001 */
     case X86_SYSCALL = "syscall"; // SYSCALL/SYSRET
     case X86_MP = "mp"; // MP Capable
     case X86_NX = "nx"; // Execute Disable
@@ -50,9 +52,13 @@ enum Feature: string {
     case X86_LM = "lm"; // Long Mode (x86-64, 64-bit support)
     case X86_3DNOWEXT = "3dnowext"; // AMD 3DNow extensions
     case X86_3DNOW = "3dnow"; // 3DNow
+
+    /* Transmeta-defined CPU features, CPUID level 0x80860001 */
     case X86_RECOVERY = "recovery"; // CPU in recovery mode
     case X86_LONGRUN = "longrun"; // Longrun power control
     case X86_LRTI = "lrti"; // LongRun table interface
+
+    /* Other features, Linux-defined mapping */
     case X86_CXMMX = "cxmmx"; // Cyrix MMX extensions
     case X86_K6_MTRR = "k6_mtrr"; // AMD K6 nonstandard MTRRs
     case X86_CYRIX_ARR = "cyrix_arr"; // Cyrix ARRs (= MTRRs)
@@ -71,7 +77,11 @@ enum Feature: string {
     case X86_SYSENTER32 = "sysenter32"; // sysenter in IA32 userspace
     case X86_REP_GOOD = "rep_good"; // REP microcode works well
     case X86_MFENCE_RDTSC = "mfence_rdtsc"; // MFENCE synchronizes RDTSC
+
+    /* AMD-defined Extended Feature 2 EAX, CPUID level 0x80000021 (EAX) */
     case X86_LFENCE_RDTSC = "lfence_rdtsc"; // LFENCE always serializing / synchronizes RDTSC
+
+    /* Other features, Linux-defined mapping */
     case X86_ACC_POWER = "acc_power"; // AMD Accumulated Power Mechanism
     case X86_NOPL = "nopl"; // The NOPL (0F 1F) instructions
     case X86_ALWAYS = "always"; // Always-present feature
@@ -84,6 +94,8 @@ enum Feature: string {
     case X86_APERFMPERF = "aperfmperf"; // P-State hardware coordination feedback capability (APERF/MPERF MSRs)
     case X86_NONSTOP_TSC_S3 = "nonstop_tsc_s3"; // TSC doesn't stop in S3 state
     case X86_TSC_KNOWN_FREQ = "tsc_known_freq"; // TSC has known frequency
+
+    /* Intel-defined CPU features, CPUID level 0x00000001 (ECX) */
     case X86_XMM3 = "pni"; // SSE-3
     case X86_PCLMULQDQ = "pclmulqdq"; // PCLMULQDQ instruction
     case X86_DTES64 = "dtes64"; // 64-bit Debug Store
@@ -115,6 +127,8 @@ enum Feature: string {
     case X86_F16C = "f16c"; // 16-bit FP conversions
     case X86_RDRAND = "rdrand"; // RDRAND instruction
     case X86_HYPERVISOR = "hypervisor"; // Running on a hypervisor
+
+    /* VIA/Cyrix/Centaur-defined CPU features, CPUID level 0xC0000001 */
     case X86_XSTORE = "rng"; // RNG present (xstore)
     case X86_XSTORE_EN = "rng_en"; // RNG enabled
     case X86_XCRYPT = "ace"; // on-CPU crypto (xcrypt)
@@ -125,6 +139,8 @@ enum Feature: string {
     case X86_PHE_EN = "phe_en"; // PHE enabled
     case X86_PMM = "pmm"; // PadLock Montgomery Multiplier
     case X86_PMM_EN = "pmm_en"; // PMM enabled
+
+    /* More extended AMD flags: CPUID level 0x80000001, ECX */
     case X86_LAHF_LM = "lahf_lm"; // LAHF/SAHF in long mode
     case X86_CMP_LEGACY = "cmp_legacy"; // If yes HyperThreading not valid
     case X86_SVM = "svm"; // Secure Virtual Machine
@@ -151,6 +167,8 @@ enum Feature: string {
     case X86_PTSC = "ptsc"; // Performance time-stamp counter
     case X86_PERFCTR_LLC = "perfctr_llc"; // Last Level Cache performance counter extensions
     case X86_MWAITX = "mwaitx"; // MWAIT extension (MONITORX/MWAITX instructions)
+
+    /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
     case X86_RING3MWAIT = "ring3mwait"; // Ring 3 MONITOR/MWAIT instructions
     case X86_CPUID_FAULT = "cpuid_fault"; // Intel CPUID faulting
     case X86_CPB = "cpb"; // AMD Core Performance Boost
@@ -161,9 +179,17 @@ enum Feature: string {
     case X86_INVPCID_SINGLE = "invpcid_single"; // Effectively INVPCID && CR4.PCIDE=1
     case X86_HW_PSTATE = "hw_pstate"; // AMD HW-PState
     case X86_PROC_FEEDBACK = "proc_feedback"; // AMD ProcFeedbackInterface
+
+    /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
     case X86_SME = "sme"; // AMD Secure Memory Encryption
+
+    /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
     case X86_PTI = "pti"; // Kernel Page Table Isolation enabled
+
+    /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
     case X86_RETPOLINE = "retpoline"; // Generic Retpoline mitigation for Spectre variant 2
+
+    /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
     case X86_RETPOLINE_AMD = "retpoline_amd"; // AMD Retpoline mitigation for Spectre variant 2
     case X86_INTEL_PPIN = "intel_ppin"; // Intel Processor Inventory Number
     case X86_CDP_L2 = "cdp_l2"; // Code and Data Prioritization L2
@@ -171,7 +197,11 @@ enum Feature: string {
     case X86_SSBD = "ssbd"; // Speculative Store Bypass Disable
     case X86_MBA = "mba"; // Memory Bandwidth Allocation
     case X86_RSB_CTXSW = "rsb_ctxsw"; // Fill RSB on context switches
+
+    /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
     case X86_SEV = "sev"; // AMD Secure Encrypted Virtualization
+
+    /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
     case X86_USE_IBPB = "use_ibpb"; // Indirect Branch Prediction Barrier enabled
     case X86_USE_IBRS_FW = "use_ibrs_fw"; // Use IBRS during runtime firmware calls
     case X86_SPEC_STORE_BYPASS_DISABLE = "spec_store_bypass_disable"; // Disable Speculative Store Bypass.
@@ -182,14 +212,22 @@ enum Feature: string {
     case X86_ZEN = "zen"; // CPU based on Zen microarchitecture
     case X86_L1TF_PTEINV = "l1tf_pteinv"; // L1TF workaround PTE inversion
     case X86_IBRS_ENHANCED = "ibrs_enhanced"; // Enhanced IBRS
+
+    /* Virtualization flags: Linux defined */
     case X86_TPR_SHADOW = "tpr_shadow"; // Intel TPR Shadow
+
+    /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
     case X86_VNMI = "vnmi"; // Virtual NMI
+
+    /* Virtualization flags: Linux defined */
     case X86_FLEXPRIORITY = "flexpriority"; // Intel FlexPriority
     case X86_EPT = "ept"; // Intel Extended Page Table
     case X86_VPID = "vpid"; // Intel Virtual Processor ID
     case X86_VMMCALL = "vmmcall"; // Prefer VMMCALL to VMCALL
     case X86_XENPV = "xenpv"; // Xen paravirtual guest
     case X86_EPT_AD = "ept_ad"; // Intel Extended Page Table access-dirty bit
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (EBX) */
     case X86_FSGSBASE = "fsgsbase"; // RDFSBASE, WRFSBASE, RDGSBASE, WRGSBASE instructions
     case X86_TSC_ADJUST = "tsc_adjust"; // TSC adjustment MSR 0x3B
     case X86_BMI1 = "bmi1"; // 1st group bit manipulation extensions
@@ -218,14 +256,20 @@ enum Feature: string {
     case X86_SHA_NI = "sha_ni"; // SHA1/SHA256 Instruction Extensions
     case X86_AVX512BW = "avx512bw"; // AVX-512 BW (Byte/Word granular) Instructions
     case X86_AVX512VL = "avx512vl"; // AVX-512 VL (128/256 Vector Length) Extensions
+
+    /* Extended state features, CPUID level 0x0000000d:1 (EAX) */
     case X86_XSAVEOPT = "xsaveopt"; // XSAVEOPT instruction
     case X86_XSAVEC = "xsavec"; // XSAVEC instruction
     case X86_XGETBV1 = "xgetbv1"; // XGETBV with ECX = 1 instruction
     case X86_XSAVES = "xsaves"; // XSAVES/XRSTORS instructions
+
+    /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
     case X86_CQM_LLC = "cqm_llc"; // LLC QoS if 1
     case X86_CQM_OCCUP_LLC = "cqm_occup_llc"; // LLC occupancy monitoring
     case X86_CQM_MBM_TOTAL = "cqm_mbm_total"; // LLC Total MBM monitoring
     case X86_CQM_MBM_LOCAL = "cqm_mbm_local"; // LLC Local MBM monitoring
+
+    /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
     case X86_CLZERO = "clzero"; // CLZERO instruction
     case X86_IRPERF = "irperf"; // Instructions Retired Count
     case X86_XSAVEERPTR = "xsaveerptr"; // Always save/restore FP error pointers
@@ -237,6 +281,8 @@ enum Feature: string {
     case X86_AMD_SSBD = "amd_ssbd"; // Speculative Store Bypass Disable
     case X86_VIRT_SSBD = "virt_ssbd"; // Virtualized Speculative Store Bypass Disable
     case X86_AMD_SSB_NO = "amd_ssb_no"; // Speculative Store Bypass is fixed in hardware.
+
+    /* Thermal and Power Management Leaf, CPUID level 0x00000006 (EAX) */
     case X86_DTHERM = "dtherm"; // Digital Thermal Sensor
     case X86_IDA = "ida"; // Intel Dynamic Acceleration
     case X86_ARAT = "arat"; // Always Running APIC Timer
@@ -247,6 +293,8 @@ enum Feature: string {
     case X86_HWP_ACT_WINDOW = "hwp_act_window"; // HWP Activity Window
     case X86_HWP_EPP = "hwp_epp"; // HWP Energy Perf. Preference
     case X86_HWP_PKG_REQ = "hwp_pkg_req"; // HWP Package Level Request
+
+    /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
     case X86_NPT = "npt"; // Nested Page Table support
     case X86_LBRV = "lbrv"; // LBR Virtualization support
     case X86_SVML = "svm_lock"; // SVM locking MSR
@@ -260,6 +308,8 @@ enum Feature: string {
     case X86_AVIC = "avic"; // Virtual Interrupt Controller
     case X86_V_VMSAVE_VMLOAD = "v_vmsave_vmload"; // Virtual VMSAVE VMLOAD
     case X86_VGIF = "vgif"; // Virtual GIF
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
     case X86_AVX512VBMI = "avx512vbmi"; // AVX512 Vector Bit Manipulation instructions
     case X86_UMIP = "umip"; // User Mode Instruction Protection
     case X86_PKU = "pku"; // Protection Keys for Userspace
@@ -277,9 +327,13 @@ enum Feature: string {
     case X86_CLDEMOTE = "cldemote"; // CLDEMOTE instruction
     case X86_MOVDIRI = "movdiri"; // MOVDIRI instruction
     case X86_MOVDIR64B = "movdir64b"; // MOVDIR64B instruction
+
+    /* AMD-defined CPU features, CPUID level 0x80000007 (EBX) */
     case X86_OVERFLOW_RECOV = "overflow_recov"; // MCA overflow recovery support
     case X86_SUCCOR = "succor"; // Uncorrectable error containment and recovery
     case X86_SMCA = "smca"; // Scalable MCA
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
     case X86_AVX512_4VNNIW = "avx512_4vnniw"; // AVX-512 Neural Network Instructions
     case X86_AVX512_4FMAPS = "avx512_4fmaps"; // AVX-512 Multiply Accumulation Single precision
     case X86_PCONFIG = "pconfig"; // Intel PCONFIG
@@ -290,95 +344,207 @@ enum Feature: string {
     case X86_SPEC_CTRL_SSBD = "spec_ctrl_ssbd"; // Speculative Store Bypass Disable
     case X86_TSX_FORCE_ABORT = "tsx_force_abort"; // TSX_FORCE_ABORT
     case X86_MD_CLEAR = "md_clear"; // VERW clears CPU buffers
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (EBX) */
     case X86_FDP_EXCPTN_ONLY = "fdp_excptn_only"; // FPU data pointer updated only on x87 exceptions
     case X86_ZERO_FCS_FDS = "zero_fcs_fds"; // Zero out FPU CS and FPU DS
+
+    /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
     case X86_FENCE_SWAPGS_USER = "fence_swapgs_user"; // LFENCE in user entry SWAPGS path
     case X86_FENCE_SWAPGS_KERNEL = "fence_swapgs_kernel"; // LFENCE in kernel entry SWAPGS path
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
     case X86_AVX512_BF16 = "avx512_bf16"; // AVX512 BFLOAT16 instructions
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
     case X86_WAITPKG = "waitpkg"; // UMONITOR/UMWAIT/TPAUSE Instructions
+
+    /* Virtualization flags: Linux defined */
     case X86_VMCALL = "vmcall"; // Hypervisor supports the VMCALL instruction
     case X86_VMW_VMMCALL = "vmw_vmmcall"; // VMware prefers VMMCALL hypercall instruction
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
     case X86_AVX512_VP2INTERSECT = "avx512_vp2intersect"; // AVX-512 Intersect for D/Q
+
+    /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
     case X86_RDPRU = "rdpru"; // Read processor register at user level
+
+    /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
     case X86_MSR_IA32_FEAT_CTL = "msr_ia32_feat_ctl"; // MSR IA32_FEAT_CTL configured
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
     case X86_FSRM = "fsrm"; // Fast Short Rep Mov
+
+    /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
     case X86_SPLIT_LOCK_DETECT = "split_lock_detect"; // #AC for split lock
+
+    /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
     case X86_AMD_PPIN = "amd_ppin"; // Protected Processor Inventory Number
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
     case X86_CORE_CAPABILITIES = "core_capabilities"; // IA32_CORE_CAPABILITIES MSR
     case X86_SRBDS_CTRL = "srbds_ctrl"; // SRBDS mitigation MSR available
     case X86_SERIALIZE = "serialize"; // SERIALIZE instruction
     case X86_ARCH_LBR = "arch_lbr"; // Intel ARCH LBR
+
+    /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
     case X86_SME_COHERENT = "sme_coherent"; // AMD hardware-enforced cache coherency
     case X86_SEV_ES = "sev_es"; // AMD Secure Encrypted Virtualization - Encrypted State
+
+    /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
     case X86_PER_THREAD_MBA = "per_thread_mba"; // Per-thread Memory Bandwidth Allocation
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
     case X86_ENQCMD = "enqcmd"; // ENQCMD and ENQCMDS instructions
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
     case X86_TSXLDTRK = "tsxldtrk"; // TSX Suspend Load Address Tracking
+
+    /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
     case X86_VM_PAGE_FLUSH = "vm_page_flush"; // VM Page Flush MSR is supported
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (EBX) */
     case X86_SGX = "sgx"; // Software Guard Extensions
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
     case X86_SGX_LC = "sgx_lc"; // Software Guard Extensions Launch Control
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
     case X86_AVX512_FP16 = "avx512_fp16"; // AVX512 FP16
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
     case X86_AVX_VNNI = "avx_vnni"; // AVX VNNI instructions
+
+    /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
     case X86_SVME_ADDR_CHK = "svme_addr_chk"; // SVME addr check
+
+    /* Virtualization flags: Linux defined */
     case X86_PVUNLOCK = "pvunlock"; // PV unlock function
     case X86_VCPUPREEMPT = "vcpupreempt"; // PV vcpu_is_preempted function
+
+    /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
     case X86_SGX1 = "sgx1"; // Basic SGX
     case X86_SGX2 = "sgx2"; // SGX Enclave Dynamic Memory Management (EDMM)
+
+    /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
     case X86_V_SPEC_CTRL = "v_spec_ctrl"; // Virtual SPEC_CTRL
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
     case X86_BUS_LOCK_DETECT = "bus_lock_detect"; // Bus Lock detect
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
     case X86_HYBRID_CPU = "hybrid_cpu"; // This part has CPUs of more than one type
+
+    /* Other features, Linux-defined mapping */
     case X86_RAPL = "rapl"; // AMD/Hygon RAPL interface
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
     case X86_RTM_ALWAYS_ABORT = "rtm_always_abort"; // RTM transaction always aborts
+
+    /* Extended state features, CPUID level 0x0000000d:1 (EAX) */
     case X86_XFD = "xfd"; // eXtended Feature Disabling
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
     case X86_AMX_TILE = "amx_tile"; // AMX tile Support
+
+    /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
     case X86_RETPOLINE_LFENCE = "retpoline_lfence"; // Use LFENCE for Spectre variant 2
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
     case X86_AMX_BF16 = "amx_bf16"; // AMX bf16 Support
     case X86_AMX_INT8 = "amx_int8"; // AMX int8 Support
+
+    /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
     case X86_CPPC = "cppc"; // Collaborative Processor Performance Control
+
+    /* Thermal and Power Management Leaf, CPUID level 0x00000006 (EAX) */
     case X86_HFI = "hfi"; // Hardware Feedback Interface
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
     case X86_IBT = "ibt"; // Indirect Branch Tracking
+
+    /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
     case X86_XCOMPACTED = "xcompacted"; // Use compacted XSTATE (XSAVES or XSAVEC)
     case X86_KERNEL_IBRS = "kernel_ibrs"; // Set/clear IBRS on kernel entry/exit
     case X86_RSB_VMEXIT = "rsb_vmexit"; // Fill RSB on VM-Exit
     case X86_PERFMON_V2 = "perfmon_v2"; // AMD Performance Monitoring Version 2
+
+    /* Virtualization flags: Linux defined */
     case X86_TDX_GUEST = "tdx_guest"; // Intel Trust Domain Extensions Guest
+
+    /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
     case X86_ENTRY_IBPB = "entry_ibpb"; // Issue an IBPB on kernel entry
     case X86_RRSBA_CTRL = "rrsba_ctrl"; // RET prediction control
     case X86_RETHUNK = "rethunk"; // Use REturn THUNK
     case X86_UNRET = "unret"; // AMD BTB untrain return
     case X86_USE_IBPB_FW = "use_ibpb_fw"; // Use IBPB during runtime firmware calls
+
+    /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
     case X86_BTC_NO = "btc_no"; // Not vulnerable to Branch Type Confusion
     case X86_BRS = "brs"; // Branch Sampling available
+
+    /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
     case X86_V_TSC_AUX = "v_tsc_aux"; // Virtual TSC_AUX
+
+    /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
     case X86_RSB_VMEXIT_LITE = "rsb_vmexit_lite"; // Fill RSB on VM exit when EIBRS is enabled
+
+    /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
     case X86_X2AVIC = "x2avic"; // Virtual x2apic
+
+    /* Other features, Linux-defined mapping */
     case X86_AMD_LBR_V2 = "amd_lbr_v2"; // AMD Last Branch Record Extension Version 2
+
+    /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
     case X86_MSR_TSX_CTRL = "msr_tsx_ctrl"; // MSR IA32_TSX_CTRL (Intel) implemented
     case X86_SGX_EDECCSSA = "sgx_edeccssa"; // SGX EDECCSSA user leaf function
     case X86_CALL_DEPTH = "call_depth"; // Call depth tracking for RSB stuffing
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
     case X86_CMPCCXADD = "cmpccxadd"; // CMPccXADD instructions
     case X86_AMX_FP16 = "amx_fp16"; // AMX fp16 Support
     case X86_AVX_IFMA = "avx_ifma"; // Support for VPMADD52[H,L]UQ
+
+    /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
     case X86_SMBA = "smba"; // Slow Memory Bandwidth Allocation
     case X86_BMEC = "bmec"; // Bandwidth Monitoring Event Configuration
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
     case X86_ARCH_PERFMON_EXT = "arch_perfmon_ext"; // Intel Architectural PerfMon Extension
     case X86_FZRM = "fzrm"; // Fast zero-length REP MOVSB
     case X86_FSRS = "fsrs"; // Fast short REP STOSB
     case X86_FSRC = "fsrc"; // Fast short REP {CMPSB,SCASB}
     case X86_LKGS = "lkgs"; // Load "kernel" (userspace) GS
+
+    /* AMD-defined Extended Feature 2 EAX, CPUID level 0x80000021 (EAX) */
     case X86_NO_NESTED_DATA_BP = "no_nested_data_bp"; // No Nested Data Breakpoints
     case X86_NULL_SEL_CLR_BASE = "null_sel_clr_base"; // Null Selector Clears Base
     case X86_AUTOIBRS = "autoibrs"; // Automatic IBRS
     case X86_NO_SMM_CTL_MSR = "no_smm_ctl_msr"; // SMM_CTL MSR is not present
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
     case X86_LAM = "lam"; // Linear Address Masking
+
+    /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
     case X86_AMD_PSFD = "amd_psfd"; // Predictive Store Forwarding Disable
+
+    /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
     case X86_SRSO = "srso"; // AMD BTB untrain RETs
     case X86_SRSO_ALIAS = "srso_alias"; // AMD BTB untrain RETs through aliasing
     case X86_IBPB_ON_VMEXIT = "ibpb_on_vmexit"; // Issue an IBPB only on VMEXIT
+
+    /* AMD-defined Extended Feature 2 EAX, CPUID level 0x80000021 (EAX) */
     case X86_SBPB = "sbpb"; // Selective Branch Prediction Barrier
     case X86_IBPB_BRTYPE = "ibpb_brtype"; // MSR_PRED_CMD[IBPB] flushes all branch type predictions
     case X86_SRSO_NO = "srso_no"; // CPU is not affected by SRSO
+
+    /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
     case X86_USER_SHSTK = "user_shstk"; // Shadow stack support for user mode applications
+
+    /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
     case X86_SHSTK = "shstk"; // Shadow stack
+
+    /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
     case X86_DEBUG_SWAP = "debug_swap"; // AMD SEV-ES full debug state swap support
 
 
@@ -465,6 +631,8 @@ enum Feature: string {
             self::X86_ACC => false,
             self::X86_IA64 => false,
             self::X86_PBE => false,
+
+            /* AMD-defined CPU features, CPUID level 0x80000001 */
             self::X86_SYSCALL => false,
             self::X86_MP => false,
             self::X86_NX => false,
@@ -475,9 +643,13 @@ enum Feature: string {
             self::X86_LM => false,
             self::X86_3DNOWEXT => false,
             self::X86_3DNOW => false,
+
+            /* Transmeta-defined CPU features, CPUID level 0x80860001 */
             self::X86_RECOVERY => false,
             self::X86_LONGRUN => false,
             self::X86_LRTI => false,
+
+            /* Other features, Linux-defined mapping */
             self::X86_CXMMX => false,
             self::X86_K6_MTRR => false,
             self::X86_CYRIX_ARR => false,
@@ -496,7 +668,11 @@ enum Feature: string {
             self::X86_SYSENTER32 => true,
             self::X86_REP_GOOD => false,
             self::X86_MFENCE_RDTSC => true,
+
+            /* AMD-defined Extended Feature 2 EAX, CPUID level 0x80000021 (EAX) */
             self::X86_LFENCE_RDTSC => true,
+
+            /* Other features, Linux-defined mapping */
             self::X86_ACC_POWER => false,
             self::X86_NOPL => false,
             self::X86_ALWAYS => true,
@@ -509,6 +685,8 @@ enum Feature: string {
             self::X86_APERFMPERF => false,
             self::X86_NONSTOP_TSC_S3 => false,
             self::X86_TSC_KNOWN_FREQ => false,
+
+            /* Intel-defined CPU features, CPUID level 0x00000001 (ECX) */
             self::X86_XMM3 => false,
             self::X86_PCLMULQDQ => false,
             self::X86_DTES64 => false,
@@ -540,6 +718,8 @@ enum Feature: string {
             self::X86_F16C => false,
             self::X86_RDRAND => false,
             self::X86_HYPERVISOR => false,
+
+            /* VIA/Cyrix/Centaur-defined CPU features, CPUID level 0xC0000001 */
             self::X86_XSTORE => false,
             self::X86_XSTORE_EN => false,
             self::X86_XCRYPT => false,
@@ -550,6 +730,8 @@ enum Feature: string {
             self::X86_PHE_EN => false,
             self::X86_PMM => false,
             self::X86_PMM_EN => false,
+
+            /* More extended AMD flags: CPUID level 0x80000001, ECX */
             self::X86_LAHF_LM => false,
             self::X86_CMP_LEGACY => false,
             self::X86_SVM => false,
@@ -576,6 +758,8 @@ enum Feature: string {
             self::X86_PTSC => false,
             self::X86_PERFCTR_LLC => false,
             self::X86_MWAITX => false,
+
+            /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
             self::X86_RING3MWAIT => false,
             self::X86_CPUID_FAULT => false,
             self::X86_CPB => false,
@@ -586,9 +770,17 @@ enum Feature: string {
             self::X86_INVPCID_SINGLE => false,
             self::X86_HW_PSTATE => false,
             self::X86_PROC_FEEDBACK => false,
+
+            /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
             self::X86_SME => false,
+
+            /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
             self::X86_PTI => false,
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_RETPOLINE => true,
+
+            /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
             self::X86_RETPOLINE_AMD => true,
             self::X86_INTEL_PPIN => false,
             self::X86_CDP_L2 => false,
@@ -596,7 +788,11 @@ enum Feature: string {
             self::X86_SSBD => false,
             self::X86_MBA => false,
             self::X86_RSB_CTXSW => true,
+
+            /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
             self::X86_SEV => false,
+
+            /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
             self::X86_USE_IBPB => true,
             self::X86_USE_IBRS_FW => true,
             self::X86_SPEC_STORE_BYPASS_DISABLE => true,
@@ -607,14 +803,22 @@ enum Feature: string {
             self::X86_ZEN => true,
             self::X86_L1TF_PTEINV => true,
             self::X86_IBRS_ENHANCED => false,
+
+            /* Virtualization flags: Linux defined */
             self::X86_TPR_SHADOW => false,
+
+            /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
             self::X86_VNMI => false,
+
+            /* Virtualization flags: Linux defined */
             self::X86_FLEXPRIORITY => false,
             self::X86_EPT => false,
             self::X86_VPID => false,
             self::X86_VMMCALL => false,
             self::X86_XENPV => true,
             self::X86_EPT_AD => false,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EBX) */
             self::X86_FSGSBASE => false,
             self::X86_TSC_ADJUST => false,
             self::X86_BMI1 => false,
@@ -643,14 +847,20 @@ enum Feature: string {
             self::X86_SHA_NI => false,
             self::X86_AVX512BW => false,
             self::X86_AVX512VL => false,
+
+            /* Extended state features, CPUID level 0x0000000d:1 (EAX) */
             self::X86_XSAVEOPT => false,
             self::X86_XSAVEC => false,
             self::X86_XGETBV1 => false,
             self::X86_XSAVES => false,
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_CQM_LLC => false,
             self::X86_CQM_OCCUP_LLC => false,
             self::X86_CQM_MBM_TOTAL => false,
             self::X86_CQM_MBM_LOCAL => false,
+
+            /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
             self::X86_CLZERO => false,
             self::X86_IRPERF => false,
             self::X86_XSAVEERPTR => false,
@@ -662,6 +872,8 @@ enum Feature: string {
             self::X86_AMD_SSBD => true,
             self::X86_VIRT_SSBD => false,
             self::X86_AMD_SSB_NO => true,
+
+            /* Thermal and Power Management Leaf, CPUID level 0x00000006 (EAX) */
             self::X86_DTHERM => false,
             self::X86_IDA => false,
             self::X86_ARAT => false,
@@ -672,6 +884,8 @@ enum Feature: string {
             self::X86_HWP_ACT_WINDOW => false,
             self::X86_HWP_EPP => false,
             self::X86_HWP_PKG_REQ => false,
+
+            /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
             self::X86_NPT => false,
             self::X86_LBRV => false,
             self::X86_SVML => false,
@@ -685,6 +899,8 @@ enum Feature: string {
             self::X86_AVIC => false,
             self::X86_V_VMSAVE_VMLOAD => false,
             self::X86_VGIF => false,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
             self::X86_AVX512VBMI => false,
             self::X86_UMIP => false,
             self::X86_PKU => false,
@@ -702,9 +918,13 @@ enum Feature: string {
             self::X86_CLDEMOTE => false,
             self::X86_MOVDIRI => false,
             self::X86_MOVDIR64B => false,
+
+            /* AMD-defined CPU features, CPUID level 0x80000007 (EBX) */
             self::X86_OVERFLOW_RECOV => false,
             self::X86_SUCCOR => false,
             self::X86_SMCA => false,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_AVX512_4VNNIW => false,
             self::X86_AVX512_4FMAPS => false,
             self::X86_PCONFIG => false,
@@ -715,95 +935,207 @@ enum Feature: string {
             self::X86_SPEC_CTRL_SSBD => true,
             self::X86_TSX_FORCE_ABORT => true,
             self::X86_MD_CLEAR => false,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EBX) */
             self::X86_FDP_EXCPTN_ONLY => true,
             self::X86_ZERO_FCS_FDS => true,
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_FENCE_SWAPGS_USER => true,
             self::X86_FENCE_SWAPGS_KERNEL => true,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
             self::X86_AVX512_BF16 => false,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
             self::X86_WAITPKG => false,
+
+            /* Virtualization flags: Linux defined */
             self::X86_VMCALL => true,
             self::X86_VMW_VMMCALL => true,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_AVX512_VP2INTERSECT => false,
+
+            /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
             self::X86_RDPRU => false,
+
+            /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
             self::X86_MSR_IA32_FEAT_CTL => true,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_FSRM => false,
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_SPLIT_LOCK_DETECT => false,
+
+            /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
             self::X86_AMD_PPIN => false,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_CORE_CAPABILITIES => true,
             self::X86_SRBDS_CTRL => true,
             self::X86_SERIALIZE => false,
             self::X86_ARCH_LBR => false,
+
+            /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
             self::X86_SME_COHERENT => true,
             self::X86_SEV_ES => false,
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_PER_THREAD_MBA => true,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
             self::X86_ENQCMD => false,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_TSXLDTRK => false,
+
+            /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
             self::X86_VM_PAGE_FLUSH => true,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EBX) */
             self::X86_SGX => false,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
             self::X86_SGX_LC => false,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_AVX512_FP16 => false,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
             self::X86_AVX_VNNI => false,
+
+            /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
             self::X86_SVME_ADDR_CHK => true,
+
+            /* Virtualization flags: Linux defined */
             self::X86_PVUNLOCK => true,
             self::X86_VCPUPREEMPT => true,
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_SGX1 => true,
             self::X86_SGX2 => true,
+
+            /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
             self::X86_V_SPEC_CTRL => false,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
             self::X86_BUS_LOCK_DETECT => false,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_HYBRID_CPU => true,
+
+            /* Other features, Linux-defined mapping */
             self::X86_RAPL => false,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_RTM_ALWAYS_ABORT => true,
+
+            /* Extended state features, CPUID level 0x0000000d:1 (EAX) */
             self::X86_XFD => true,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_AMX_TILE => false,
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_RETPOLINE_LFENCE => true,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_AMX_BF16 => false,
             self::X86_AMX_INT8 => false,
+
+            /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
             self::X86_CPPC => false,
+
+            /* Thermal and Power Management Leaf, CPUID level 0x00000006 (EAX) */
             self::X86_HFI => false,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_IBT => false,
+
+            /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
             self::X86_XCOMPACTED => true,
             self::X86_KERNEL_IBRS => true,
             self::X86_RSB_VMEXIT => true,
             self::X86_PERFMON_V2 => false,
+
+            /* Virtualization flags: Linux defined */
             self::X86_TDX_GUEST => false,
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_ENTRY_IBPB => true,
             self::X86_RRSBA_CTRL => true,
             self::X86_RETHUNK => true,
             self::X86_UNRET => true,
             self::X86_USE_IBPB_FW => true,
+
+            /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
             self::X86_BTC_NO => true,
             self::X86_BRS => false,
+
+            /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
             self::X86_V_TSC_AUX => true,
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_RSB_VMEXIT_LITE => true,
+
+            /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
             self::X86_X2AVIC => false,
+
+            /* Other features, Linux-defined mapping */
             self::X86_AMD_LBR_V2 => false,
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_MSR_TSX_CTRL => true,
             self::X86_SGX_EDECCSSA => true,
             self::X86_CALL_DEPTH => true,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
             self::X86_CMPCCXADD => true,
             self::X86_AMX_FP16 => true,
             self::X86_AVX_IFMA => true,
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_SMBA => true,
             self::X86_BMEC => true,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
             self::X86_ARCH_PERFMON_EXT => true,
             self::X86_FZRM => true,
             self::X86_FSRS => true,
             self::X86_FSRC => true,
             self::X86_LKGS => true,
+
+            /* AMD-defined Extended Feature 2 EAX, CPUID level 0x80000021 (EAX) */
             self::X86_NO_NESTED_DATA_BP => true,
             self::X86_NULL_SEL_CLR_BASE => true,
             self::X86_AUTOIBRS => true,
             self::X86_NO_SMM_CTL_MSR => true,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
             self::X86_LAM => false,
+
+            /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
             self::X86_AMD_PSFD => true,
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_SRSO => true,
             self::X86_SRSO_ALIAS => true,
             self::X86_IBPB_ON_VMEXIT => true,
+
+            /* AMD-defined Extended Feature 2 EAX, CPUID level 0x80000021 (EAX) */
             self::X86_SBPB => true,
             self::X86_IBPB_BRTYPE => true,
             self::X86_SRSO_NO => true,
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_USER_SHSTK => false,
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
             self::X86_SHSTK => true,
+
+            /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
             self::X86_DEBUG_SWAP => false,
         };
     }
@@ -840,6 +1172,8 @@ enum Feature: string {
             self::X86_ACC => 'Automatic clock control',
             self::X86_IA64 => 'IA-64 processor',
             self::X86_PBE => 'Pending Break Enable',
+
+            /* AMD-defined CPU features, CPUID level 0x80000001 */
             self::X86_SYSCALL => 'SYSCALL/SYSRET',
             self::X86_MP => 'MP Capable',
             self::X86_NX => 'Execute Disable',
@@ -850,9 +1184,13 @@ enum Feature: string {
             self::X86_LM => 'Long Mode (x86-64, 64-bit support)',
             self::X86_3DNOWEXT => 'AMD 3DNow extensions',
             self::X86_3DNOW => '3DNow',
+
+            /* Transmeta-defined CPU features, CPUID level 0x80860001 */
             self::X86_RECOVERY => 'CPU in recovery mode',
             self::X86_LONGRUN => 'Longrun power control',
             self::X86_LRTI => 'LongRun table interface',
+
+            /* Other features, Linux-defined mapping */
             self::X86_CXMMX => 'Cyrix MMX extensions',
             self::X86_K6_MTRR => 'AMD K6 nonstandard MTRRs',
             self::X86_CYRIX_ARR => 'Cyrix ARRs (= MTRRs)',
@@ -871,7 +1209,11 @@ enum Feature: string {
             self::X86_SYSENTER32 => 'sysenter in IA32 userspace',
             self::X86_REP_GOOD => 'REP microcode works well',
             self::X86_MFENCE_RDTSC => 'MFENCE synchronizes RDTSC',
+
+            /* AMD-defined Extended Feature 2 EAX, CPUID level 0x80000021 (EAX) */
             self::X86_LFENCE_RDTSC => 'LFENCE always serializing / synchronizes RDTSC',
+
+            /* Other features, Linux-defined mapping */
             self::X86_ACC_POWER => 'AMD Accumulated Power Mechanism',
             self::X86_NOPL => 'The NOPL (0F 1F) instructions',
             self::X86_ALWAYS => 'Always-present feature',
@@ -884,6 +1226,8 @@ enum Feature: string {
             self::X86_APERFMPERF => 'P-State hardware coordination feedback capability (APERF/MPERF MSRs)',
             self::X86_NONSTOP_TSC_S3 => 'TSC doesn\'t stop in S3 state',
             self::X86_TSC_KNOWN_FREQ => 'TSC has known frequency',
+
+            /* Intel-defined CPU features, CPUID level 0x00000001 (ECX) */
             self::X86_XMM3 => 'SSE-3',
             self::X86_PCLMULQDQ => 'PCLMULQDQ instruction',
             self::X86_DTES64 => '64-bit Debug Store',
@@ -915,6 +1259,8 @@ enum Feature: string {
             self::X86_F16C => '16-bit FP conversions',
             self::X86_RDRAND => 'RDRAND instruction',
             self::X86_HYPERVISOR => 'Running on a hypervisor',
+
+            /* VIA/Cyrix/Centaur-defined CPU features, CPUID level 0xC0000001 */
             self::X86_XSTORE => 'RNG present (xstore)',
             self::X86_XSTORE_EN => 'RNG enabled',
             self::X86_XCRYPT => 'on-CPU crypto (xcrypt)',
@@ -925,6 +1271,8 @@ enum Feature: string {
             self::X86_PHE_EN => 'PHE enabled',
             self::X86_PMM => 'PadLock Montgomery Multiplier',
             self::X86_PMM_EN => 'PMM enabled',
+
+            /* More extended AMD flags: CPUID level 0x80000001, ECX */
             self::X86_LAHF_LM => 'LAHF/SAHF in long mode',
             self::X86_CMP_LEGACY => 'If yes HyperThreading not valid',
             self::X86_SVM => 'Secure Virtual Machine',
@@ -951,6 +1299,8 @@ enum Feature: string {
             self::X86_PTSC => 'Performance time-stamp counter',
             self::X86_PERFCTR_LLC => 'Last Level Cache performance counter extensions',
             self::X86_MWAITX => 'MWAIT extension (MONITORX/MWAITX instructions)',
+
+            /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
             self::X86_RING3MWAIT => 'Ring 3 MONITOR/MWAIT instructions',
             self::X86_CPUID_FAULT => 'Intel CPUID faulting',
             self::X86_CPB => 'AMD Core Performance Boost',
@@ -961,9 +1311,17 @@ enum Feature: string {
             self::X86_INVPCID_SINGLE => 'Effectively INVPCID && CR4.PCIDE=1',
             self::X86_HW_PSTATE => 'AMD HW-PState',
             self::X86_PROC_FEEDBACK => 'AMD ProcFeedbackInterface',
+
+            /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
             self::X86_SME => 'AMD Secure Memory Encryption',
+
+            /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
             self::X86_PTI => 'Kernel Page Table Isolation enabled',
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_RETPOLINE => 'Generic Retpoline mitigation for Spectre variant 2',
+
+            /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
             self::X86_RETPOLINE_AMD => 'AMD Retpoline mitigation for Spectre variant 2',
             self::X86_INTEL_PPIN => 'Intel Processor Inventory Number',
             self::X86_CDP_L2 => 'Code and Data Prioritization L2',
@@ -971,7 +1329,11 @@ enum Feature: string {
             self::X86_SSBD => 'Speculative Store Bypass Disable',
             self::X86_MBA => 'Memory Bandwidth Allocation',
             self::X86_RSB_CTXSW => 'Fill RSB on context switches',
+
+            /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
             self::X86_SEV => 'AMD Secure Encrypted Virtualization',
+
+            /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
             self::X86_USE_IBPB => 'Indirect Branch Prediction Barrier enabled',
             self::X86_USE_IBRS_FW => 'Use IBRS during runtime firmware calls',
             self::X86_SPEC_STORE_BYPASS_DISABLE => 'Disable Speculative Store Bypass.',
@@ -982,14 +1344,22 @@ enum Feature: string {
             self::X86_ZEN => 'CPU based on Zen microarchitecture',
             self::X86_L1TF_PTEINV => 'L1TF workaround PTE inversion',
             self::X86_IBRS_ENHANCED => 'Enhanced IBRS',
+
+            /* Virtualization flags: Linux defined */
             self::X86_TPR_SHADOW => 'Intel TPR Shadow',
+
+            /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
             self::X86_VNMI => 'Virtual NMI',
+
+            /* Virtualization flags: Linux defined */
             self::X86_FLEXPRIORITY => 'Intel FlexPriority',
             self::X86_EPT => 'Intel Extended Page Table',
             self::X86_VPID => 'Intel Virtual Processor ID',
             self::X86_VMMCALL => 'Prefer VMMCALL to VMCALL',
             self::X86_XENPV => 'Xen paravirtual guest',
             self::X86_EPT_AD => 'Intel Extended Page Table access-dirty bit',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EBX) */
             self::X86_FSGSBASE => 'RDFSBASE, WRFSBASE, RDGSBASE, WRGSBASE instructions',
             self::X86_TSC_ADJUST => 'TSC adjustment MSR 0x3B',
             self::X86_BMI1 => '1st group bit manipulation extensions',
@@ -1018,14 +1388,20 @@ enum Feature: string {
             self::X86_SHA_NI => 'SHA1/SHA256 Instruction Extensions',
             self::X86_AVX512BW => 'AVX-512 BW (Byte/Word granular) Instructions',
             self::X86_AVX512VL => 'AVX-512 VL (128/256 Vector Length) Extensions',
+
+            /* Extended state features, CPUID level 0x0000000d:1 (EAX) */
             self::X86_XSAVEOPT => 'XSAVEOPT instruction',
             self::X86_XSAVEC => 'XSAVEC instruction',
             self::X86_XGETBV1 => 'XGETBV with ECX = 1 instruction',
             self::X86_XSAVES => 'XSAVES/XRSTORS instructions',
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_CQM_LLC => 'LLC QoS if 1',
             self::X86_CQM_OCCUP_LLC => 'LLC occupancy monitoring',
             self::X86_CQM_MBM_TOTAL => 'LLC Total MBM monitoring',
             self::X86_CQM_MBM_LOCAL => 'LLC Local MBM monitoring',
+
+            /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
             self::X86_CLZERO => 'CLZERO instruction',
             self::X86_IRPERF => 'Instructions Retired Count',
             self::X86_XSAVEERPTR => 'Always save/restore FP error pointers',
@@ -1037,6 +1413,8 @@ enum Feature: string {
             self::X86_AMD_SSBD => 'Speculative Store Bypass Disable',
             self::X86_VIRT_SSBD => 'Virtualized Speculative Store Bypass Disable',
             self::X86_AMD_SSB_NO => 'Speculative Store Bypass is fixed in hardware.',
+
+            /* Thermal and Power Management Leaf, CPUID level 0x00000006 (EAX) */
             self::X86_DTHERM => 'Digital Thermal Sensor',
             self::X86_IDA => 'Intel Dynamic Acceleration',
             self::X86_ARAT => 'Always Running APIC Timer',
@@ -1047,6 +1425,8 @@ enum Feature: string {
             self::X86_HWP_ACT_WINDOW => 'HWP Activity Window',
             self::X86_HWP_EPP => 'HWP Energy Perf. Preference',
             self::X86_HWP_PKG_REQ => 'HWP Package Level Request',
+
+            /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
             self::X86_NPT => 'Nested Page Table support',
             self::X86_LBRV => 'LBR Virtualization support',
             self::X86_SVML => 'SVM locking MSR',
@@ -1060,6 +1440,8 @@ enum Feature: string {
             self::X86_AVIC => 'Virtual Interrupt Controller',
             self::X86_V_VMSAVE_VMLOAD => 'Virtual VMSAVE VMLOAD',
             self::X86_VGIF => 'Virtual GIF',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
             self::X86_AVX512VBMI => 'AVX512 Vector Bit Manipulation instructions',
             self::X86_UMIP => 'User Mode Instruction Protection',
             self::X86_PKU => 'Protection Keys for Userspace',
@@ -1077,9 +1459,13 @@ enum Feature: string {
             self::X86_CLDEMOTE => 'CLDEMOTE instruction',
             self::X86_MOVDIRI => 'MOVDIRI instruction',
             self::X86_MOVDIR64B => 'MOVDIR64B instruction',
+
+            /* AMD-defined CPU features, CPUID level 0x80000007 (EBX) */
             self::X86_OVERFLOW_RECOV => 'MCA overflow recovery support',
             self::X86_SUCCOR => 'Uncorrectable error containment and recovery',
             self::X86_SMCA => 'Scalable MCA',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_AVX512_4VNNIW => 'AVX-512 Neural Network Instructions',
             self::X86_AVX512_4FMAPS => 'AVX-512 Multiply Accumulation Single precision',
             self::X86_PCONFIG => 'Intel PCONFIG',
@@ -1090,95 +1476,207 @@ enum Feature: string {
             self::X86_SPEC_CTRL_SSBD => 'Speculative Store Bypass Disable',
             self::X86_TSX_FORCE_ABORT => 'TSX_FORCE_ABORT',
             self::X86_MD_CLEAR => 'VERW clears CPU buffers',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EBX) */
             self::X86_FDP_EXCPTN_ONLY => 'FPU data pointer updated only on x87 exceptions',
             self::X86_ZERO_FCS_FDS => 'Zero out FPU CS and FPU DS',
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_FENCE_SWAPGS_USER => 'LFENCE in user entry SWAPGS path',
             self::X86_FENCE_SWAPGS_KERNEL => 'LFENCE in kernel entry SWAPGS path',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
             self::X86_AVX512_BF16 => 'AVX512 BFLOAT16 instructions',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
             self::X86_WAITPKG => 'UMONITOR/UMWAIT/TPAUSE Instructions',
+
+            /* Virtualization flags: Linux defined */
             self::X86_VMCALL => 'Hypervisor supports the VMCALL instruction',
             self::X86_VMW_VMMCALL => 'VMware prefers VMMCALL hypercall instruction',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_AVX512_VP2INTERSECT => 'AVX-512 Intersect for D/Q',
+
+            /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
             self::X86_RDPRU => 'Read processor register at user level',
+
+            /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
             self::X86_MSR_IA32_FEAT_CTL => 'MSR IA32_FEAT_CTL configured',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_FSRM => 'Fast Short Rep Mov',
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_SPLIT_LOCK_DETECT => '#AC for split lock',
+
+            /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
             self::X86_AMD_PPIN => 'Protected Processor Inventory Number',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_CORE_CAPABILITIES => 'IA32_CORE_CAPABILITIES MSR',
             self::X86_SRBDS_CTRL => 'SRBDS mitigation MSR available',
             self::X86_SERIALIZE => 'SERIALIZE instruction',
             self::X86_ARCH_LBR => 'Intel ARCH LBR',
+
+            /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
             self::X86_SME_COHERENT => 'AMD hardware-enforced cache coherency',
             self::X86_SEV_ES => 'AMD Secure Encrypted Virtualization - Encrypted State',
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_PER_THREAD_MBA => 'Per-thread Memory Bandwidth Allocation',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
             self::X86_ENQCMD => 'ENQCMD and ENQCMDS instructions',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_TSXLDTRK => 'TSX Suspend Load Address Tracking',
+
+            /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
             self::X86_VM_PAGE_FLUSH => 'VM Page Flush MSR is supported',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EBX) */
             self::X86_SGX => 'Software Guard Extensions',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
             self::X86_SGX_LC => 'Software Guard Extensions Launch Control',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_AVX512_FP16 => 'AVX512 FP16',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
             self::X86_AVX_VNNI => 'AVX VNNI instructions',
+
+            /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
             self::X86_SVME_ADDR_CHK => 'SVME addr check',
+
+            /* Virtualization flags: Linux defined */
             self::X86_PVUNLOCK => 'PV unlock function',
             self::X86_VCPUPREEMPT => 'PV vcpu_is_preempted function',
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_SGX1 => 'Basic SGX',
             self::X86_SGX2 => 'SGX Enclave Dynamic Memory Management (EDMM)',
+
+            /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
             self::X86_V_SPEC_CTRL => 'Virtual SPEC_CTRL',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
             self::X86_BUS_LOCK_DETECT => 'Bus Lock detect',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_HYBRID_CPU => 'This part has CPUs of more than one type',
+
+            /* Other features, Linux-defined mapping */
             self::X86_RAPL => 'AMD/Hygon RAPL interface',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_RTM_ALWAYS_ABORT => 'RTM transaction always aborts',
+
+            /* Extended state features, CPUID level 0x0000000d:1 (EAX) */
             self::X86_XFD => 'eXtended Feature Disabling',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_AMX_TILE => 'AMX tile Support',
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_RETPOLINE_LFENCE => 'Use LFENCE for Spectre variant 2',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_AMX_BF16 => 'AMX bf16 Support',
             self::X86_AMX_INT8 => 'AMX int8 Support',
+
+            /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
             self::X86_CPPC => 'Collaborative Processor Performance Control',
+
+            /* Thermal and Power Management Leaf, CPUID level 0x00000006 (EAX) */
             self::X86_HFI => 'Hardware Feedback Interface',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
             self::X86_IBT => 'Indirect Branch Tracking',
+
+            /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
             self::X86_XCOMPACTED => 'Use compacted XSTATE (XSAVES or XSAVEC)',
             self::X86_KERNEL_IBRS => 'Set/clear IBRS on kernel entry/exit',
             self::X86_RSB_VMEXIT => 'Fill RSB on VM-Exit',
             self::X86_PERFMON_V2 => 'AMD Performance Monitoring Version 2',
+
+            /* Virtualization flags: Linux defined */
             self::X86_TDX_GUEST => 'Intel Trust Domain Extensions Guest',
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_ENTRY_IBPB => 'Issue an IBPB on kernel entry',
             self::X86_RRSBA_CTRL => 'RET prediction control',
             self::X86_RETHUNK => 'Use REturn THUNK',
             self::X86_UNRET => 'AMD BTB untrain return',
             self::X86_USE_IBPB_FW => 'Use IBPB during runtime firmware calls',
+
+            /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
             self::X86_BTC_NO => 'Not vulnerable to Branch Type Confusion',
             self::X86_BRS => 'Branch Sampling available',
+
+            /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
             self::X86_V_TSC_AUX => 'Virtual TSC_AUX',
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_RSB_VMEXIT_LITE => 'Fill RSB on VM exit when EIBRS is enabled',
+
+            /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
             self::X86_X2AVIC => 'Virtual x2apic',
+
+            /* Other features, Linux-defined mapping */
             self::X86_AMD_LBR_V2 => 'AMD Last Branch Record Extension Version 2',
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_MSR_TSX_CTRL => 'MSR IA32_TSX_CTRL (Intel) implemented',
             self::X86_SGX_EDECCSSA => 'SGX EDECCSSA user leaf function',
             self::X86_CALL_DEPTH => 'Call depth tracking for RSB stuffing',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
             self::X86_CMPCCXADD => 'CMPccXADD instructions',
             self::X86_AMX_FP16 => 'AMX fp16 Support',
             self::X86_AVX_IFMA => 'Support for VPMADD52[H,L]UQ',
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_SMBA => 'Slow Memory Bandwidth Allocation',
             self::X86_BMEC => 'Bandwidth Monitoring Event Configuration',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
             self::X86_ARCH_PERFMON_EXT => 'Intel Architectural PerfMon Extension',
             self::X86_FZRM => 'Fast zero-length REP MOVSB',
             self::X86_FSRS => 'Fast short REP STOSB',
             self::X86_FSRC => 'Fast short REP {CMPSB,SCASB}',
             self::X86_LKGS => 'Load "kernel" (userspace) GS',
+
+            /* AMD-defined Extended Feature 2 EAX, CPUID level 0x80000021 (EAX) */
             self::X86_NO_NESTED_DATA_BP => 'No Nested Data Breakpoints',
             self::X86_NULL_SEL_CLR_BASE => 'Null Selector Clears Base',
             self::X86_AUTOIBRS => 'Automatic IBRS',
             self::X86_NO_SMM_CTL_MSR => 'SMM_CTL MSR is not present',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
             self::X86_LAM => 'Linear Address Masking',
+
+            /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
             self::X86_AMD_PSFD => 'Predictive Store Forwarding Disable',
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_SRSO => 'AMD BTB untrain RETs',
             self::X86_SRSO_ALIAS => 'AMD BTB untrain RETs through aliasing',
             self::X86_IBPB_ON_VMEXIT => 'Issue an IBPB only on VMEXIT',
+
+            /* AMD-defined Extended Feature 2 EAX, CPUID level 0x80000021 (EAX) */
             self::X86_SBPB => 'Selective Branch Prediction Barrier',
             self::X86_IBPB_BRTYPE => 'MSR_PRED_CMD[IBPB] flushes all branch type predictions',
             self::X86_SRSO_NO => 'CPU is not affected by SRSO',
+
+            /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
             self::X86_USER_SHSTK => 'Shadow stack support for user mode applications',
+
+            /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
             self::X86_SHSTK => 'Shadow stack',
+
+            /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
             self::X86_DEBUG_SWAP => 'AMD SEV-ES full debug state swap support',
         };
     }
@@ -2054,6 +2552,8 @@ enum Feature: string {
             Kernel::v6_5->value => 31,
             Kernel::v6_6->value => 31,
         ],
+
+        /* AMD-defined CPU features, CPUID level 0x80000001 */
         self::X86_SYSCALL->value => [
             Kernel::v5_0->value => 11,
             Kernel::v5_1->value => 11,
@@ -2344,6 +2844,8 @@ enum Feature: string {
             Kernel::v6_5->value => 31,
             Kernel::v6_6->value => 31,
         ],
+
+        /* Transmeta-defined CPU features, CPUID level 0x80860001 */
         self::X86_RECOVERY->value => [
             Kernel::v5_0->value => 0,
             Kernel::v5_1->value => 0,
@@ -2431,6 +2933,8 @@ enum Feature: string {
             Kernel::v6_5->value => 3,
             Kernel::v6_6->value => 3,
         ],
+
+        /* Other features, Linux-defined mapping */
         self::X86_CXMMX->value => [
             Kernel::v5_0->value => 0,
             Kernel::v5_1->value => 0,
@@ -2916,6 +3420,8 @@ enum Feature: string {
             Kernel::v5_2->value => 17,
             Kernel::v5_3->value => 17,
         ],
+
+        /* AMD-defined Extended Feature 2 EAX, CPUID level 0x80000021 (EAX) */
         self::X86_LFENCE_RDTSC->value => [
             Kernel::v5_0->value => 18,
             Kernel::v5_1->value => 18,
@@ -2945,6 +3451,8 @@ enum Feature: string {
             Kernel::v6_5->value => 2,
             Kernel::v6_6->value => 2,
         ],
+
+        /* Other features, Linux-defined mapping */
         self::X86_ACC_POWER->value => [
             Kernel::v5_0->value => 19,
             Kernel::v5_1->value => 19,
@@ -3293,6 +3801,8 @@ enum Feature: string {
             Kernel::v6_5->value => 31,
             Kernel::v6_6->value => 31,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000001 (ECX) */
         self::X86_XMM3->value => [
             Kernel::v5_0->value => 0,
             Kernel::v5_1->value => 0,
@@ -4192,6 +4702,8 @@ enum Feature: string {
             Kernel::v6_5->value => 31,
             Kernel::v6_6->value => 31,
         ],
+
+        /* VIA/Cyrix/Centaur-defined CPU features, CPUID level 0xC0000001 */
         self::X86_XSTORE->value => [
             Kernel::v5_0->value => 2,
             Kernel::v5_1->value => 2,
@@ -4482,6 +4994,8 @@ enum Feature: string {
             Kernel::v6_5->value => 13,
             Kernel::v6_6->value => 13,
         ],
+
+        /* More extended AMD flags: CPUID level 0x80000001, ECX */
         self::X86_LAHF_LM->value => [
             Kernel::v5_0->value => 0,
             Kernel::v5_1->value => 0,
@@ -5236,6 +5750,8 @@ enum Feature: string {
             Kernel::v6_5->value => 29,
             Kernel::v6_6->value => 29,
         ],
+
+        /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
         self::X86_RING3MWAIT->value => [
             Kernel::v5_0->value => 0,
             Kernel::v5_1->value => 0,
@@ -5525,6 +6041,8 @@ enum Feature: string {
             Kernel::v6_5->value => 9,
             Kernel::v6_6->value => 9,
         ],
+
+        /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
         self::X86_SME->value => [
             Kernel::v5_0->value => 10,
             Kernel::v5_1->value => 10,
@@ -5554,6 +6072,8 @@ enum Feature: string {
             Kernel::v6_5->value => 0,
             Kernel::v6_6->value => 0,
         ],
+
+        /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
         self::X86_PTI->value => [
             Kernel::v5_0->value => 11,
             Kernel::v5_1->value => 11,
@@ -5583,6 +6103,8 @@ enum Feature: string {
             Kernel::v6_5->value => 11,
             Kernel::v6_6->value => 11,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_RETPOLINE->value => [
             Kernel::v5_0->value => 12,
             Kernel::v5_1->value => 12,
@@ -5612,6 +6134,8 @@ enum Feature: string {
             Kernel::v6_5->value => 12,
             Kernel::v6_6->value => 12,
         ],
+
+        /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
         self::X86_RETPOLINE_AMD->value => [
             Kernel::v5_0->value => 13,
             Kernel::v5_1->value => 13,
@@ -5805,6 +6329,8 @@ enum Feature: string {
             Kernel::v6_5->value => 19,
             Kernel::v6_6->value => 19,
         ],
+
+        /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
         self::X86_SEV->value => [
             Kernel::v5_0->value => 20,
             Kernel::v5_1->value => 20,
@@ -5834,6 +6360,8 @@ enum Feature: string {
             Kernel::v6_5->value => 1,
             Kernel::v6_6->value => 1,
         ],
+
+        /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
         self::X86_USE_IBPB->value => [
             Kernel::v5_0->value => 21,
             Kernel::v5_1->value => 21,
@@ -6124,6 +6652,8 @@ enum Feature: string {
             Kernel::v6_5->value => 30,
             Kernel::v6_6->value => 30,
         ],
+
+        /* Virtualization flags: Linux defined */
         self::X86_TPR_SHADOW->value => [
             Kernel::v5_0->value => 0,
             Kernel::v5_1->value => 0,
@@ -6153,6 +6683,8 @@ enum Feature: string {
             Kernel::v6_5->value => 0,
             Kernel::v6_6->value => 0,
         ],
+
+        /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
         self::X86_VNMI->value => [
             Kernel::v5_0->value => 1,
             Kernel::v5_1->value => 1,
@@ -6182,6 +6714,8 @@ enum Feature: string {
             Kernel::v6_5->value => 25,
             Kernel::v6_6->value => 25,
         ],
+
+        /* Virtualization flags: Linux defined */
         self::X86_FLEXPRIORITY->value => [
             Kernel::v5_0->value => 2,
             Kernel::v5_1->value => 2,
@@ -6356,6 +6890,8 @@ enum Feature: string {
             Kernel::v6_5->value => 17,
             Kernel::v6_6->value => 17,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EBX) */
         self::X86_FSGSBASE->value => [
             Kernel::v5_0->value => 0,
             Kernel::v5_1->value => 0,
@@ -7168,6 +7704,8 @@ enum Feature: string {
             Kernel::v6_5->value => 31,
             Kernel::v6_6->value => 31,
         ],
+
+        /* Extended state features, CPUID level 0x0000000d:1 (EAX) */
         self::X86_XSAVEOPT->value => [
             Kernel::v5_0->value => 0,
             Kernel::v5_1->value => 0,
@@ -7284,6 +7822,8 @@ enum Feature: string {
             Kernel::v6_5->value => 3,
             Kernel::v6_6->value => 3,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_CQM_LLC->value => [
             Kernel::v5_0->value => 1,
             Kernel::v5_1->value => 1,
@@ -7400,6 +7940,8 @@ enum Feature: string {
             Kernel::v6_5->value => 3,
             Kernel::v6_6->value => 3,
         ],
+
+        /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
         self::X86_CLZERO->value => [
             Kernel::v5_0->value => 0,
             Kernel::v5_1->value => 0,
@@ -7719,6 +8261,8 @@ enum Feature: string {
             Kernel::v6_5->value => 26,
             Kernel::v6_6->value => 26,
         ],
+
+        /* Thermal and Power Management Leaf, CPUID level 0x00000006 (EAX) */
         self::X86_DTHERM->value => [
             Kernel::v5_0->value => 0,
             Kernel::v5_1->value => 0,
@@ -8009,6 +8553,8 @@ enum Feature: string {
             Kernel::v6_5->value => 11,
             Kernel::v6_6->value => 11,
         ],
+
+        /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
         self::X86_NPT->value => [
             Kernel::v5_0->value => 0,
             Kernel::v5_1->value => 0,
@@ -8386,6 +8932,8 @@ enum Feature: string {
             Kernel::v6_5->value => 16,
             Kernel::v6_6->value => 16,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
         self::X86_AVX512VBMI->value => [
             Kernel::v5_0->value => 1,
             Kernel::v5_1->value => 1,
@@ -8879,6 +9427,8 @@ enum Feature: string {
             Kernel::v6_5->value => 28,
             Kernel::v6_6->value => 28,
         ],
+
+        /* AMD-defined CPU features, CPUID level 0x80000007 (EBX) */
         self::X86_OVERFLOW_RECOV->value => [
             Kernel::v5_0->value => 0,
             Kernel::v5_1->value => 0,
@@ -8966,6 +9516,8 @@ enum Feature: string {
             Kernel::v6_5->value => 3,
             Kernel::v6_6->value => 3,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_AVX512_4VNNIW->value => [
             Kernel::v5_0->value => 2,
             Kernel::v5_1->value => 2,
@@ -9253,6 +9805,8 @@ enum Feature: string {
             Kernel::v6_5->value => 10,
             Kernel::v6_6->value => 10,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EBX) */
         self::X86_FDP_EXCPTN_ONLY->value => [
             Kernel::v5_3->value => 6,
             Kernel::v5_4->value => 6,
@@ -9305,6 +9859,8 @@ enum Feature: string {
             Kernel::v6_5->value => 13,
             Kernel::v6_6->value => 13,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_FENCE_SWAPGS_USER->value => [
             Kernel::v5_3->value => 4,
             Kernel::v5_4->value => 4,
@@ -9357,6 +9913,8 @@ enum Feature: string {
             Kernel::v6_5->value => 5,
             Kernel::v6_6->value => 5,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
         self::X86_AVX512_BF16->value => [
             Kernel::v5_3->value => 5,
             Kernel::v5_4->value => 5,
@@ -9383,6 +9941,8 @@ enum Feature: string {
             Kernel::v6_5->value => 5,
             Kernel::v6_6->value => 5,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
         self::X86_WAITPKG->value => [
             Kernel::v5_3->value => 5,
             Kernel::v5_4->value => 5,
@@ -9409,6 +9969,8 @@ enum Feature: string {
             Kernel::v6_5->value => 5,
             Kernel::v6_6->value => 5,
         ],
+
+        /* Virtualization flags: Linux defined */
         self::X86_VMCALL->value => [
             Kernel::v5_4->value => 18,
             Kernel::v5_5->value => 18,
@@ -9459,6 +10021,8 @@ enum Feature: string {
             Kernel::v6_5->value => 19,
             Kernel::v6_6->value => 19,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_AVX512_VP2INTERSECT->value => [
             Kernel::v5_4->value => 8,
             Kernel::v5_5->value => 8,
@@ -9484,6 +10048,8 @@ enum Feature: string {
             Kernel::v6_5->value => 8,
             Kernel::v6_6->value => 8,
         ],
+
+        /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
         self::X86_RDPRU->value => [
             Kernel::v5_5->value => 4,
             Kernel::v5_6->value => 4,
@@ -9508,6 +10074,8 @@ enum Feature: string {
             Kernel::v6_5->value => 4,
             Kernel::v6_6->value => 4,
         ],
+
+        /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
         self::X86_MSR_IA32_FEAT_CTL->value => [
             Kernel::v5_6->value => 31,
             Kernel::v5_7->value => 31,
@@ -9531,6 +10099,8 @@ enum Feature: string {
             Kernel::v6_5->value => 31,
             Kernel::v6_6->value => 31,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_FSRM->value => [
             Kernel::v5_6->value => 4,
             Kernel::v5_7->value => 4,
@@ -9554,6 +10124,8 @@ enum Feature: string {
             Kernel::v6_5->value => 4,
             Kernel::v6_6->value => 4,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_SPLIT_LOCK_DETECT->value => [
             Kernel::v5_7->value => 6,
             Kernel::v5_8->value => 6,
@@ -9576,6 +10148,8 @@ enum Feature: string {
             Kernel::v6_5->value => 6,
             Kernel::v6_6->value => 6,
         ],
+
+        /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
         self::X86_AMD_PPIN->value => [
             Kernel::v5_7->value => 23,
             Kernel::v5_8->value => 23,
@@ -9598,6 +10172,8 @@ enum Feature: string {
             Kernel::v6_5->value => 23,
             Kernel::v6_6->value => 23,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_CORE_CAPABILITIES->value => [
             Kernel::v5_7->value => 30,
             Kernel::v5_8->value => 30,
@@ -9681,6 +10257,8 @@ enum Feature: string {
             Kernel::v6_5->value => 19,
             Kernel::v6_6->value => 19,
         ],
+
+        /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
         self::X86_SME_COHERENT->value => [
             Kernel::v5_10->value => 17,
             Kernel::v5_11->value => 17,
@@ -9719,6 +10297,8 @@ enum Feature: string {
             Kernel::v6_5->value => 3,
             Kernel::v6_6->value => 3,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_PER_THREAD_MBA->value => [
             Kernel::v5_10->value => 7,
             Kernel::v5_11->value => 7,
@@ -9738,6 +10318,8 @@ enum Feature: string {
             Kernel::v6_5->value => 7,
             Kernel::v6_6->value => 7,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
         self::X86_ENQCMD->value => [
             Kernel::v5_10->value => 29,
             Kernel::v5_11->value => 29,
@@ -9757,6 +10339,8 @@ enum Feature: string {
             Kernel::v6_5->value => 29,
             Kernel::v6_6->value => 29,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_TSXLDTRK->value => [
             Kernel::v5_10->value => 16,
             Kernel::v5_11->value => 16,
@@ -9776,6 +10360,8 @@ enum Feature: string {
             Kernel::v6_5->value => 16,
             Kernel::v6_6->value => 16,
         ],
+
+        /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
         self::X86_VM_PAGE_FLUSH->value => [
             Kernel::v5_11->value => 21,
             Kernel::v5_12->value => 2,
@@ -9794,6 +10380,8 @@ enum Feature: string {
             Kernel::v6_5->value => 2,
             Kernel::v6_6->value => 2,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EBX) */
         self::X86_SGX->value => [
             Kernel::v5_11->value => 2,
             Kernel::v5_12->value => 2,
@@ -9812,6 +10400,8 @@ enum Feature: string {
             Kernel::v6_5->value => 2,
             Kernel::v6_6->value => 2,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
         self::X86_SGX_LC->value => [
             Kernel::v5_11->value => 30,
             Kernel::v5_12->value => 30,
@@ -9830,6 +10420,8 @@ enum Feature: string {
             Kernel::v6_5->value => 30,
             Kernel::v6_6->value => 30,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_AVX512_FP16->value => [
             Kernel::v5_11->value => 23,
             Kernel::v5_12->value => 23,
@@ -9848,6 +10440,8 @@ enum Feature: string {
             Kernel::v6_5->value => 23,
             Kernel::v6_6->value => 23,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
         self::X86_AVX_VNNI->value => [
             Kernel::v5_12->value => 4,
             Kernel::v5_13->value => 4,
@@ -9865,6 +10459,8 @@ enum Feature: string {
             Kernel::v6_5->value => 4,
             Kernel::v6_6->value => 4,
         ],
+
+        /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
         self::X86_SVME_ADDR_CHK->value => [
             Kernel::v5_12->value => 28,
             Kernel::v5_13->value => 28,
@@ -9882,6 +10478,8 @@ enum Feature: string {
             Kernel::v6_5->value => 28,
             Kernel::v6_6->value => 28,
         ],
+
+        /* Virtualization flags: Linux defined */
         self::X86_PVUNLOCK->value => [
             Kernel::v5_13->value => 20,
             Kernel::v5_14->value => 20,
@@ -9914,6 +10512,8 @@ enum Feature: string {
             Kernel::v6_5->value => 21,
             Kernel::v6_6->value => 21,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_SGX1->value => [
             Kernel::v5_13->value => 8,
             Kernel::v5_14->value => 8,
@@ -9946,6 +10546,8 @@ enum Feature: string {
             Kernel::v6_5->value => 9,
             Kernel::v6_6->value => 9,
         ],
+
+        /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
         self::X86_V_SPEC_CTRL->value => [
             Kernel::v5_13->value => 20,
             Kernel::v5_14->value => 20,
@@ -9962,6 +10564,8 @@ enum Feature: string {
             Kernel::v6_5->value => 20,
             Kernel::v6_6->value => 20,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
         self::X86_BUS_LOCK_DETECT->value => [
             Kernel::v5_13->value => 24,
             Kernel::v5_14->value => 24,
@@ -9978,6 +10582,8 @@ enum Feature: string {
             Kernel::v6_5->value => 24,
             Kernel::v6_6->value => 24,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_HYBRID_CPU->value => [
             Kernel::v5_13->value => 15,
             Kernel::v5_14->value => 15,
@@ -9994,6 +10600,8 @@ enum Feature: string {
             Kernel::v6_5->value => 15,
             Kernel::v6_6->value => 15,
         ],
+
+        /* Other features, Linux-defined mapping */
         self::X86_RAPL->value => [
             Kernel::v5_14->value => 29,
             Kernel::v5_15->value => 29,
@@ -10009,6 +10617,8 @@ enum Feature: string {
             Kernel::v6_5->value => 29,
             Kernel::v6_6->value => 29,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_RTM_ALWAYS_ABORT->value => [
             Kernel::v5_14->value => 11,
             Kernel::v5_15->value => 11,
@@ -10024,6 +10634,8 @@ enum Feature: string {
             Kernel::v6_5->value => 11,
             Kernel::v6_6->value => 11,
         ],
+
+        /* Extended state features, CPUID level 0x0000000d:1 (EAX) */
         self::X86_XFD->value => [
             Kernel::v5_16->value => 4,
             Kernel::v5_17->value => 4,
@@ -10037,6 +10649,8 @@ enum Feature: string {
             Kernel::v6_5->value => 4,
             Kernel::v6_6->value => 4,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_AMX_TILE->value => [
             Kernel::v5_16->value => 24,
             Kernel::v5_17->value => 24,
@@ -10050,6 +10664,8 @@ enum Feature: string {
             Kernel::v6_5->value => 24,
             Kernel::v6_6->value => 24,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_RETPOLINE_LFENCE->value => [
             Kernel::v5_17->value => 13,
             Kernel::v5_18->value => 13,
@@ -10062,6 +10678,8 @@ enum Feature: string {
             Kernel::v6_5->value => 13,
             Kernel::v6_6->value => 13,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_AMX_BF16->value => [
             Kernel::v5_17->value => 22,
             Kernel::v5_18->value => 22,
@@ -10086,6 +10704,8 @@ enum Feature: string {
             Kernel::v6_5->value => 25,
             Kernel::v6_6->value => 25,
         ],
+
+        /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
         self::X86_CPPC->value => [
             Kernel::v5_17->value => 27,
             Kernel::v5_18->value => 27,
@@ -10098,6 +10718,8 @@ enum Feature: string {
             Kernel::v6_5->value => 27,
             Kernel::v6_6->value => 27,
         ],
+
+        /* Thermal and Power Management Leaf, CPUID level 0x00000006 (EAX) */
         self::X86_HFI->value => [
             Kernel::v5_18->value => 19,
             Kernel::v5_19->value => 19,
@@ -10109,6 +10731,8 @@ enum Feature: string {
             Kernel::v6_5->value => 19,
             Kernel::v6_6->value => 19,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_IBT->value => [
             Kernel::v5_18->value => 20,
             Kernel::v5_19->value => 20,
@@ -10120,6 +10744,8 @@ enum Feature: string {
             Kernel::v6_5->value => 20,
             Kernel::v6_6->value => 20,
         ],
+
+        /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
         self::X86_XCOMPACTED->value => [
             Kernel::v5_19->value => 10,
             Kernel::v6_0->value => 10,
@@ -10160,6 +10786,8 @@ enum Feature: string {
             Kernel::v6_5->value => 20,
             Kernel::v6_6->value => 20,
         ],
+
+        /* Virtualization flags: Linux defined */
         self::X86_TDX_GUEST->value => [
             Kernel::v5_19->value => 22,
             Kernel::v6_0->value => 22,
@@ -10170,6 +10798,8 @@ enum Feature: string {
             Kernel::v6_5->value => 22,
             Kernel::v6_6->value => 22,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_ENTRY_IBPB->value => [
             Kernel::v5_19->value => 10,
             Kernel::v6_0->value => 10,
@@ -10220,6 +10850,8 @@ enum Feature: string {
             Kernel::v6_5->value => 16,
             Kernel::v6_6->value => 16,
         ],
+
+        /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
         self::X86_BTC_NO->value => [
             Kernel::v5_19->value => 29,
             Kernel::v6_0->value => 29,
@@ -10240,6 +10872,8 @@ enum Feature: string {
             Kernel::v6_5->value => 31,
             Kernel::v6_6->value => 31,
         ],
+
+        /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
         self::X86_V_TSC_AUX->value => [
             Kernel::v5_19->value => 9,
             Kernel::v6_0->value => 9,
@@ -10250,6 +10884,8 @@ enum Feature: string {
             Kernel::v6_5->value => 9,
             Kernel::v6_6->value => 9,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_RSB_VMEXIT_LITE->value => [
             Kernel::v6_0->value => 17,
             Kernel::v6_1->value => 17,
@@ -10259,6 +10895,8 @@ enum Feature: string {
             Kernel::v6_5->value => 17,
             Kernel::v6_6->value => 17,
         ],
+
+        /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
         self::X86_X2AVIC->value => [
             Kernel::v6_0->value => 18,
             Kernel::v6_1->value => 18,
@@ -10268,6 +10906,8 @@ enum Feature: string {
             Kernel::v6_5->value => 18,
             Kernel::v6_6->value => 18,
         ],
+
+        /* Other features, Linux-defined mapping */
         self::X86_AMD_LBR_V2->value => [
             Kernel::v6_1->value => 17,
             Kernel::v6_2->value => 17,
@@ -10276,6 +10916,8 @@ enum Feature: string {
             Kernel::v6_5->value => 17,
             Kernel::v6_6->value => 17,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_MSR_TSX_CTRL->value => [
             Kernel::v6_1->value => 20,
             Kernel::v6_2->value => 20,
@@ -10298,6 +10940,8 @@ enum Feature: string {
             Kernel::v6_5->value => 19,
             Kernel::v6_6->value => 19,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
         self::X86_CMPCCXADD->value => [
             Kernel::v6_2->value => 7,
             Kernel::v6_3->value => 7,
@@ -10319,6 +10963,8 @@ enum Feature: string {
             Kernel::v6_5->value => 23,
             Kernel::v6_6->value => 23,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_SMBA->value => [
             Kernel::v6_3->value => 21,
             Kernel::v6_4->value => 21,
@@ -10331,6 +10977,8 @@ enum Feature: string {
             Kernel::v6_5->value => 22,
             Kernel::v6_6->value => 22,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
         self::X86_ARCH_PERFMON_EXT->value => [
             Kernel::v6_3->value => 8,
             Kernel::v6_4->value => 8,
@@ -10361,6 +11009,8 @@ enum Feature: string {
             Kernel::v6_5->value => 18,
             Kernel::v6_6->value => 18,
         ],
+
+        /* AMD-defined Extended Feature 2 EAX, CPUID level 0x80000021 (EAX) */
         self::X86_NO_NESTED_DATA_BP->value => [
             Kernel::v6_3->value => 0,
             Kernel::v6_4->value => 0,
@@ -10385,16 +11035,22 @@ enum Feature: string {
             Kernel::v6_5->value => 9,
             Kernel::v6_6->value => 9,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
         self::X86_LAM->value => [
             Kernel::v6_4->value => 26,
             Kernel::v6_5->value => 26,
             Kernel::v6_6->value => 26,
         ],
+
+        /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
         self::X86_AMD_PSFD->value => [
             Kernel::v6_4->value => 28,
             Kernel::v6_5->value => 28,
             Kernel::v6_6->value => 28,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_SRSO->value => [
             Kernel::v6_5->value => 24,
             Kernel::v6_6->value => 24,
@@ -10407,6 +11063,8 @@ enum Feature: string {
             Kernel::v6_5->value => 26,
             Kernel::v6_6->value => 26,
         ],
+
+        /* AMD-defined Extended Feature 2 EAX, CPUID level 0x80000021 (EAX) */
         self::X86_SBPB->value => [
             Kernel::v6_5->value => 27,
             Kernel::v6_6->value => 27,
@@ -10419,12 +11077,18 @@ enum Feature: string {
             Kernel::v6_5->value => 29,
             Kernel::v6_6->value => 29,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_USER_SHSTK->value => [
             Kernel::v6_6->value => 23,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
         self::X86_SHSTK->value => [
             Kernel::v6_6->value => 7,
         ],
+
+        /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
         self::X86_DEBUG_SWAP->value => [
             Kernel::v6_6->value => 14,
         ],
@@ -11301,6 +11965,8 @@ enum Feature: string {
             Kernel::v6_5->value => 0,
             Kernel::v6_6->value => 0,
         ],
+
+        /* AMD-defined CPU features, CPUID level 0x80000001 */
         self::X86_SYSCALL->value => [
             Kernel::v5_0->value => 1,
             Kernel::v5_1->value => 1,
@@ -11591,6 +12257,8 @@ enum Feature: string {
             Kernel::v6_5->value => 1,
             Kernel::v6_6->value => 1,
         ],
+
+        /* Transmeta-defined CPU features, CPUID level 0x80860001 */
         self::X86_RECOVERY->value => [
             Kernel::v5_0->value => 2,
             Kernel::v5_1->value => 2,
@@ -11678,6 +12346,8 @@ enum Feature: string {
             Kernel::v6_5->value => 2,
             Kernel::v6_6->value => 2,
         ],
+
+        /* Other features, Linux-defined mapping */
         self::X86_CXMMX->value => [
             Kernel::v5_0->value => 3,
             Kernel::v5_1->value => 3,
@@ -12163,6 +12833,8 @@ enum Feature: string {
             Kernel::v5_2->value => 3,
             Kernel::v5_3->value => 3,
         ],
+
+        /* AMD-defined Extended Feature 2 EAX, CPUID level 0x80000021 (EAX) */
         self::X86_LFENCE_RDTSC->value => [
             Kernel::v5_0->value => 3,
             Kernel::v5_1->value => 3,
@@ -12192,6 +12864,8 @@ enum Feature: string {
             Kernel::v6_5->value => 20,
             Kernel::v6_6->value => 20,
         ],
+
+        /* Other features, Linux-defined mapping */
         self::X86_ACC_POWER->value => [
             Kernel::v5_0->value => 3,
             Kernel::v5_1->value => 3,
@@ -12540,6 +13214,8 @@ enum Feature: string {
             Kernel::v6_5->value => 3,
             Kernel::v6_6->value => 3,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000001 (ECX) */
         self::X86_XMM3->value => [
             Kernel::v5_0->value => 4,
             Kernel::v5_1->value => 4,
@@ -13439,6 +14115,8 @@ enum Feature: string {
             Kernel::v6_5->value => 4,
             Kernel::v6_6->value => 4,
         ],
+
+        /* VIA/Cyrix/Centaur-defined CPU features, CPUID level 0xC0000001 */
         self::X86_XSTORE->value => [
             Kernel::v5_0->value => 5,
             Kernel::v5_1->value => 5,
@@ -13729,6 +14407,8 @@ enum Feature: string {
             Kernel::v6_5->value => 5,
             Kernel::v6_6->value => 5,
         ],
+
+        /* More extended AMD flags: CPUID level 0x80000001, ECX */
         self::X86_LAHF_LM->value => [
             Kernel::v5_0->value => 6,
             Kernel::v5_1->value => 6,
@@ -14483,6 +15163,8 @@ enum Feature: string {
             Kernel::v6_5->value => 6,
             Kernel::v6_6->value => 6,
         ],
+
+        /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
         self::X86_RING3MWAIT->value => [
             Kernel::v5_0->value => 7,
             Kernel::v5_1->value => 7,
@@ -14772,6 +15454,8 @@ enum Feature: string {
             Kernel::v6_5->value => 7,
             Kernel::v6_6->value => 7,
         ],
+
+        /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
         self::X86_SME->value => [
             Kernel::v5_0->value => 7,
             Kernel::v5_1->value => 7,
@@ -14801,6 +15485,8 @@ enum Feature: string {
             Kernel::v6_5->value => 19,
             Kernel::v6_6->value => 19,
         ],
+
+        /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
         self::X86_PTI->value => [
             Kernel::v5_0->value => 7,
             Kernel::v5_1->value => 7,
@@ -14830,6 +15516,8 @@ enum Feature: string {
             Kernel::v6_5->value => 7,
             Kernel::v6_6->value => 7,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_RETPOLINE->value => [
             Kernel::v5_0->value => 7,
             Kernel::v5_1->value => 7,
@@ -14859,6 +15547,8 @@ enum Feature: string {
             Kernel::v6_5->value => 11,
             Kernel::v6_6->value => 11,
         ],
+
+        /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
         self::X86_RETPOLINE_AMD->value => [
             Kernel::v5_0->value => 7,
             Kernel::v5_1->value => 7,
@@ -15052,6 +15742,8 @@ enum Feature: string {
             Kernel::v6_5->value => 7,
             Kernel::v6_6->value => 7,
         ],
+
+        /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
         self::X86_SEV->value => [
             Kernel::v5_0->value => 7,
             Kernel::v5_1->value => 7,
@@ -15081,6 +15773,8 @@ enum Feature: string {
             Kernel::v6_5->value => 19,
             Kernel::v6_6->value => 19,
         ],
+
+        /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
         self::X86_USE_IBPB->value => [
             Kernel::v5_0->value => 7,
             Kernel::v5_1->value => 7,
@@ -15371,6 +16065,8 @@ enum Feature: string {
             Kernel::v6_5->value => 7,
             Kernel::v6_6->value => 7,
         ],
+
+        /* Virtualization flags: Linux defined */
         self::X86_TPR_SHADOW->value => [
             Kernel::v5_0->value => 8,
             Kernel::v5_1->value => 8,
@@ -15400,6 +16096,8 @@ enum Feature: string {
             Kernel::v6_5->value => 8,
             Kernel::v6_6->value => 8,
         ],
+
+        /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
         self::X86_VNMI->value => [
             Kernel::v5_0->value => 8,
             Kernel::v5_1->value => 8,
@@ -15429,6 +16127,8 @@ enum Feature: string {
             Kernel::v6_5->value => 15,
             Kernel::v6_6->value => 15,
         ],
+
+        /* Virtualization flags: Linux defined */
         self::X86_FLEXPRIORITY->value => [
             Kernel::v5_0->value => 8,
             Kernel::v5_1->value => 8,
@@ -15603,6 +16303,8 @@ enum Feature: string {
             Kernel::v6_5->value => 8,
             Kernel::v6_6->value => 8,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EBX) */
         self::X86_FSGSBASE->value => [
             Kernel::v5_0->value => 9,
             Kernel::v5_1->value => 9,
@@ -16415,6 +17117,8 @@ enum Feature: string {
             Kernel::v6_5->value => 9,
             Kernel::v6_6->value => 9,
         ],
+
+        /* Extended state features, CPUID level 0x0000000d:1 (EAX) */
         self::X86_XSAVEOPT->value => [
             Kernel::v5_0->value => 10,
             Kernel::v5_1->value => 10,
@@ -16531,6 +17235,8 @@ enum Feature: string {
             Kernel::v6_5->value => 10,
             Kernel::v6_6->value => 10,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_CQM_LLC->value => [
             Kernel::v5_0->value => 11,
             Kernel::v5_1->value => 11,
@@ -16647,6 +17353,8 @@ enum Feature: string {
             Kernel::v6_5->value => 11,
             Kernel::v6_6->value => 11,
         ],
+
+        /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
         self::X86_CLZERO->value => [
             Kernel::v5_0->value => 13,
             Kernel::v5_1->value => 13,
@@ -16966,6 +17674,8 @@ enum Feature: string {
             Kernel::v6_5->value => 13,
             Kernel::v6_6->value => 13,
         ],
+
+        /* Thermal and Power Management Leaf, CPUID level 0x00000006 (EAX) */
         self::X86_DTHERM->value => [
             Kernel::v5_0->value => 14,
             Kernel::v5_1->value => 14,
@@ -17256,6 +17966,8 @@ enum Feature: string {
             Kernel::v6_5->value => 14,
             Kernel::v6_6->value => 14,
         ],
+
+        /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
         self::X86_NPT->value => [
             Kernel::v5_0->value => 15,
             Kernel::v5_1->value => 15,
@@ -17633,6 +18345,8 @@ enum Feature: string {
             Kernel::v6_5->value => 15,
             Kernel::v6_6->value => 15,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
         self::X86_AVX512VBMI->value => [
             Kernel::v5_0->value => 16,
             Kernel::v5_1->value => 16,
@@ -18126,6 +18840,8 @@ enum Feature: string {
             Kernel::v6_5->value => 16,
             Kernel::v6_6->value => 16,
         ],
+
+        /* AMD-defined CPU features, CPUID level 0x80000007 (EBX) */
         self::X86_OVERFLOW_RECOV->value => [
             Kernel::v5_0->value => 17,
             Kernel::v5_1->value => 17,
@@ -18213,6 +18929,8 @@ enum Feature: string {
             Kernel::v6_5->value => 17,
             Kernel::v6_6->value => 17,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_AVX512_4VNNIW->value => [
             Kernel::v5_0->value => 18,
             Kernel::v5_1->value => 18,
@@ -18500,6 +19218,8 @@ enum Feature: string {
             Kernel::v6_5->value => 18,
             Kernel::v6_6->value => 18,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EBX) */
         self::X86_FDP_EXCPTN_ONLY->value => [
             Kernel::v5_3->value => 9,
             Kernel::v5_4->value => 9,
@@ -18552,6 +19272,8 @@ enum Feature: string {
             Kernel::v6_5->value => 9,
             Kernel::v6_6->value => 9,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_FENCE_SWAPGS_USER->value => [
             Kernel::v5_3->value => 11,
             Kernel::v5_4->value => 11,
@@ -18604,6 +19326,8 @@ enum Feature: string {
             Kernel::v6_5->value => 11,
             Kernel::v6_6->value => 11,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
         self::X86_AVX512_BF16->value => [
             Kernel::v5_3->value => 12,
             Kernel::v5_4->value => 12,
@@ -18630,6 +19354,8 @@ enum Feature: string {
             Kernel::v6_5->value => 12,
             Kernel::v6_6->value => 12,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
         self::X86_WAITPKG->value => [
             Kernel::v5_3->value => 16,
             Kernel::v5_4->value => 16,
@@ -18656,6 +19382,8 @@ enum Feature: string {
             Kernel::v6_5->value => 16,
             Kernel::v6_6->value => 16,
         ],
+
+        /* Virtualization flags: Linux defined */
         self::X86_VMCALL->value => [
             Kernel::v5_4->value => 8,
             Kernel::v5_5->value => 8,
@@ -18706,6 +19434,8 @@ enum Feature: string {
             Kernel::v6_5->value => 8,
             Kernel::v6_6->value => 8,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_AVX512_VP2INTERSECT->value => [
             Kernel::v5_4->value => 18,
             Kernel::v5_5->value => 18,
@@ -18731,6 +19461,8 @@ enum Feature: string {
             Kernel::v6_5->value => 18,
             Kernel::v6_6->value => 18,
         ],
+
+        /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
         self::X86_RDPRU->value => [
             Kernel::v5_5->value => 13,
             Kernel::v5_6->value => 13,
@@ -18755,6 +19487,8 @@ enum Feature: string {
             Kernel::v6_5->value => 13,
             Kernel::v6_6->value => 13,
         ],
+
+        /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
         self::X86_MSR_IA32_FEAT_CTL->value => [
             Kernel::v5_6->value => 7,
             Kernel::v5_7->value => 7,
@@ -18778,6 +19512,8 @@ enum Feature: string {
             Kernel::v6_5->value => 7,
             Kernel::v6_6->value => 7,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_FSRM->value => [
             Kernel::v5_6->value => 18,
             Kernel::v5_7->value => 18,
@@ -18801,6 +19537,8 @@ enum Feature: string {
             Kernel::v6_5->value => 18,
             Kernel::v6_6->value => 18,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_SPLIT_LOCK_DETECT->value => [
             Kernel::v5_7->value => 11,
             Kernel::v5_8->value => 11,
@@ -18823,6 +19561,8 @@ enum Feature: string {
             Kernel::v6_5->value => 11,
             Kernel::v6_6->value => 11,
         ],
+
+        /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
         self::X86_AMD_PPIN->value => [
             Kernel::v5_7->value => 13,
             Kernel::v5_8->value => 13,
@@ -18845,6 +19585,8 @@ enum Feature: string {
             Kernel::v6_5->value => 13,
             Kernel::v6_6->value => 13,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_CORE_CAPABILITIES->value => [
             Kernel::v5_7->value => 18,
             Kernel::v5_8->value => 18,
@@ -18928,6 +19670,8 @@ enum Feature: string {
             Kernel::v6_5->value => 18,
             Kernel::v6_6->value => 18,
         ],
+
+        /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
         self::X86_SME_COHERENT->value => [
             Kernel::v5_10->value => 3,
             Kernel::v5_11->value => 3,
@@ -18966,6 +19710,8 @@ enum Feature: string {
             Kernel::v6_5->value => 19,
             Kernel::v6_6->value => 19,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_PER_THREAD_MBA->value => [
             Kernel::v5_10->value => 11,
             Kernel::v5_11->value => 11,
@@ -18985,6 +19731,8 @@ enum Feature: string {
             Kernel::v6_5->value => 11,
             Kernel::v6_6->value => 11,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
         self::X86_ENQCMD->value => [
             Kernel::v5_10->value => 16,
             Kernel::v5_11->value => 16,
@@ -19004,6 +19752,8 @@ enum Feature: string {
             Kernel::v6_5->value => 16,
             Kernel::v6_6->value => 16,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_TSXLDTRK->value => [
             Kernel::v5_10->value => 18,
             Kernel::v5_11->value => 18,
@@ -19023,6 +19773,8 @@ enum Feature: string {
             Kernel::v6_5->value => 18,
             Kernel::v6_6->value => 18,
         ],
+
+        /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
         self::X86_VM_PAGE_FLUSH->value => [
             Kernel::v5_11->value => 8,
             Kernel::v5_12->value => 19,
@@ -19041,6 +19793,8 @@ enum Feature: string {
             Kernel::v6_5->value => 19,
             Kernel::v6_6->value => 19,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EBX) */
         self::X86_SGX->value => [
             Kernel::v5_11->value => 9,
             Kernel::v5_12->value => 9,
@@ -19059,6 +19813,8 @@ enum Feature: string {
             Kernel::v6_5->value => 9,
             Kernel::v6_6->value => 9,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
         self::X86_SGX_LC->value => [
             Kernel::v5_11->value => 16,
             Kernel::v5_12->value => 16,
@@ -19077,6 +19833,8 @@ enum Feature: string {
             Kernel::v6_5->value => 16,
             Kernel::v6_6->value => 16,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_AVX512_FP16->value => [
             Kernel::v5_11->value => 18,
             Kernel::v5_12->value => 18,
@@ -19095,6 +19853,8 @@ enum Feature: string {
             Kernel::v6_5->value => 18,
             Kernel::v6_6->value => 18,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
         self::X86_AVX_VNNI->value => [
             Kernel::v5_12->value => 12,
             Kernel::v5_13->value => 12,
@@ -19112,6 +19872,8 @@ enum Feature: string {
             Kernel::v6_5->value => 12,
             Kernel::v6_6->value => 12,
         ],
+
+        /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
         self::X86_SVME_ADDR_CHK->value => [
             Kernel::v5_12->value => 15,
             Kernel::v5_13->value => 15,
@@ -19129,6 +19891,8 @@ enum Feature: string {
             Kernel::v6_5->value => 15,
             Kernel::v6_6->value => 15,
         ],
+
+        /* Virtualization flags: Linux defined */
         self::X86_PVUNLOCK->value => [
             Kernel::v5_13->value => 8,
             Kernel::v5_14->value => 8,
@@ -19161,6 +19925,8 @@ enum Feature: string {
             Kernel::v6_5->value => 8,
             Kernel::v6_6->value => 8,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_SGX1->value => [
             Kernel::v5_13->value => 11,
             Kernel::v5_14->value => 11,
@@ -19193,6 +19959,8 @@ enum Feature: string {
             Kernel::v6_5->value => 11,
             Kernel::v6_6->value => 11,
         ],
+
+        /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
         self::X86_V_SPEC_CTRL->value => [
             Kernel::v5_13->value => 15,
             Kernel::v5_14->value => 15,
@@ -19209,6 +19977,8 @@ enum Feature: string {
             Kernel::v6_5->value => 15,
             Kernel::v6_6->value => 15,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
         self::X86_BUS_LOCK_DETECT->value => [
             Kernel::v5_13->value => 16,
             Kernel::v5_14->value => 16,
@@ -19225,6 +19995,8 @@ enum Feature: string {
             Kernel::v6_5->value => 16,
             Kernel::v6_6->value => 16,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_HYBRID_CPU->value => [
             Kernel::v5_13->value => 18,
             Kernel::v5_14->value => 18,
@@ -19241,6 +20013,8 @@ enum Feature: string {
             Kernel::v6_5->value => 18,
             Kernel::v6_6->value => 18,
         ],
+
+        /* Other features, Linux-defined mapping */
         self::X86_RAPL->value => [
             Kernel::v5_14->value => 3,
             Kernel::v5_15->value => 3,
@@ -19256,6 +20030,8 @@ enum Feature: string {
             Kernel::v6_5->value => 3,
             Kernel::v6_6->value => 3,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_RTM_ALWAYS_ABORT->value => [
             Kernel::v5_14->value => 18,
             Kernel::v5_15->value => 18,
@@ -19271,6 +20047,8 @@ enum Feature: string {
             Kernel::v6_5->value => 18,
             Kernel::v6_6->value => 18,
         ],
+
+        /* Extended state features, CPUID level 0x0000000d:1 (EAX) */
         self::X86_XFD->value => [
             Kernel::v5_16->value => 10,
             Kernel::v5_17->value => 10,
@@ -19284,6 +20062,8 @@ enum Feature: string {
             Kernel::v6_5->value => 10,
             Kernel::v6_6->value => 10,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_AMX_TILE->value => [
             Kernel::v5_16->value => 18,
             Kernel::v5_17->value => 18,
@@ -19297,6 +20077,8 @@ enum Feature: string {
             Kernel::v6_5->value => 18,
             Kernel::v6_6->value => 18,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_RETPOLINE_LFENCE->value => [
             Kernel::v5_17->value => 7,
             Kernel::v5_18->value => 7,
@@ -19309,6 +20091,8 @@ enum Feature: string {
             Kernel::v6_5->value => 11,
             Kernel::v6_6->value => 11,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_AMX_BF16->value => [
             Kernel::v5_17->value => 18,
             Kernel::v5_18->value => 18,
@@ -19333,6 +20117,8 @@ enum Feature: string {
             Kernel::v6_5->value => 18,
             Kernel::v6_6->value => 18,
         ],
+
+        /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
         self::X86_CPPC->value => [
             Kernel::v5_17->value => 13,
             Kernel::v5_18->value => 13,
@@ -19345,6 +20131,8 @@ enum Feature: string {
             Kernel::v6_5->value => 13,
             Kernel::v6_6->value => 13,
         ],
+
+        /* Thermal and Power Management Leaf, CPUID level 0x00000006 (EAX) */
         self::X86_HFI->value => [
             Kernel::v5_18->value => 14,
             Kernel::v5_19->value => 14,
@@ -19356,6 +20144,8 @@ enum Feature: string {
             Kernel::v6_5->value => 14,
             Kernel::v6_6->value => 14,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (EDX) */
         self::X86_IBT->value => [
             Kernel::v5_18->value => 18,
             Kernel::v5_19->value => 18,
@@ -19367,6 +20157,8 @@ enum Feature: string {
             Kernel::v6_5->value => 18,
             Kernel::v6_6->value => 18,
         ],
+
+        /* Auxiliary flags: Linux defined - For features scattered in various CPUID levels like 0x6, 0xA etc. */
         self::X86_XCOMPACTED->value => [
             Kernel::v5_19->value => 7,
             Kernel::v6_0->value => 7,
@@ -19407,6 +20199,8 @@ enum Feature: string {
             Kernel::v6_5->value => 7,
             Kernel::v6_6->value => 7,
         ],
+
+        /* Virtualization flags: Linux defined */
         self::X86_TDX_GUEST->value => [
             Kernel::v5_19->value => 8,
             Kernel::v6_0->value => 8,
@@ -19417,6 +20211,8 @@ enum Feature: string {
             Kernel::v6_5->value => 8,
             Kernel::v6_6->value => 8,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_ENTRY_IBPB->value => [
             Kernel::v5_19->value => 11,
             Kernel::v6_0->value => 11,
@@ -19467,6 +20263,8 @@ enum Feature: string {
             Kernel::v6_5->value => 11,
             Kernel::v6_6->value => 11,
         ],
+
+        /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
         self::X86_BTC_NO->value => [
             Kernel::v5_19->value => 13,
             Kernel::v6_0->value => 13,
@@ -19487,6 +20285,8 @@ enum Feature: string {
             Kernel::v6_5->value => 13,
             Kernel::v6_6->value => 13,
         ],
+
+        /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
         self::X86_V_TSC_AUX->value => [
             Kernel::v5_19->value => 19,
             Kernel::v6_0->value => 19,
@@ -19497,6 +20297,8 @@ enum Feature: string {
             Kernel::v6_5->value => 19,
             Kernel::v6_6->value => 19,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_RSB_VMEXIT_LITE->value => [
             Kernel::v6_0->value => 11,
             Kernel::v6_1->value => 11,
@@ -19506,6 +20308,8 @@ enum Feature: string {
             Kernel::v6_5->value => 11,
             Kernel::v6_6->value => 11,
         ],
+
+        /* AMD SVM Feature Identification, CPUID level 0x8000000a (EDX) */
         self::X86_X2AVIC->value => [
             Kernel::v6_0->value => 15,
             Kernel::v6_1->value => 15,
@@ -19515,6 +20319,8 @@ enum Feature: string {
             Kernel::v6_5->value => 15,
             Kernel::v6_6->value => 15,
         ],
+
+        /* Other features, Linux-defined mapping */
         self::X86_AMD_LBR_V2->value => [
             Kernel::v6_1->value => 3,
             Kernel::v6_2->value => 3,
@@ -19523,6 +20329,8 @@ enum Feature: string {
             Kernel::v6_5->value => 3,
             Kernel::v6_6->value => 3,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_MSR_TSX_CTRL->value => [
             Kernel::v6_1->value => 11,
             Kernel::v6_2->value => 11,
@@ -19545,6 +20353,8 @@ enum Feature: string {
             Kernel::v6_5->value => 11,
             Kernel::v6_6->value => 11,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
         self::X86_CMPCCXADD->value => [
             Kernel::v6_2->value => 12,
             Kernel::v6_3->value => 12,
@@ -19566,6 +20376,8 @@ enum Feature: string {
             Kernel::v6_5->value => 12,
             Kernel::v6_6->value => 12,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_SMBA->value => [
             Kernel::v6_3->value => 11,
             Kernel::v6_4->value => 11,
@@ -19578,6 +20390,8 @@ enum Feature: string {
             Kernel::v6_5->value => 11,
             Kernel::v6_6->value => 11,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
         self::X86_ARCH_PERFMON_EXT->value => [
             Kernel::v6_3->value => 12,
             Kernel::v6_4->value => 12,
@@ -19608,6 +20422,8 @@ enum Feature: string {
             Kernel::v6_5->value => 12,
             Kernel::v6_6->value => 12,
         ],
+
+        /* AMD-defined Extended Feature 2 EAX, CPUID level 0x80000021 (EAX) */
         self::X86_NO_NESTED_DATA_BP->value => [
             Kernel::v6_3->value => 20,
             Kernel::v6_4->value => 20,
@@ -19632,16 +20448,22 @@ enum Feature: string {
             Kernel::v6_5->value => 20,
             Kernel::v6_6->value => 20,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:1 (EAX) */
         self::X86_LAM->value => [
             Kernel::v6_4->value => 12,
             Kernel::v6_5->value => 12,
             Kernel::v6_6->value => 12,
         ],
+
+        /* AMD-defined CPU features, CPUID level 0x80000008 (EBX) */
         self::X86_AMD_PSFD->value => [
             Kernel::v6_4->value => 13,
             Kernel::v6_5->value => 13,
             Kernel::v6_6->value => 13,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_SRSO->value => [
             Kernel::v6_5->value => 11,
             Kernel::v6_6->value => 11,
@@ -19654,6 +20476,8 @@ enum Feature: string {
             Kernel::v6_5->value => 11,
             Kernel::v6_6->value => 11,
         ],
+
+        /* AMD-defined Extended Feature 2 EAX, CPUID level 0x80000021 (EAX) */
         self::X86_SBPB->value => [
             Kernel::v6_5->value => 20,
             Kernel::v6_6->value => 20,
@@ -19666,12 +20490,18 @@ enum Feature: string {
             Kernel::v6_5->value => 20,
             Kernel::v6_6->value => 20,
         ],
+
+        /* Extended auxiliary flags: Linux defined - for features scattered in various CPUID levels like 0xf, etc. */
         self::X86_USER_SHSTK->value => [
             Kernel::v6_6->value => 11,
         ],
+
+        /* Intel-defined CPU features, CPUID level 0x00000007:0 (ECX) */
         self::X86_SHSTK->value => [
             Kernel::v6_6->value => 16,
         ],
+
+        /* AMD-defined memory encryption features, CPUID level 0x8000001f (EAX) */
         self::X86_DEBUG_SWAP->value => [
             Kernel::v6_6->value => 19,
         ],
