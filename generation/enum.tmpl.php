@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace Acaisia\CpuFeatures;
 
 use Acaisia\CpuFeatures\Exception\UnknownInKernelException;
+use Brick\Math\BigNumber;
 
 /**
- * A set of CPU features and their word + offset + description per kernel version
+ * A set of CPU features and their word + offset + description per kernel version.
+ *
+ * Please note that when editing, or even a new generation, for backwards compatibility reasons, the order may NOT
+ * be changed. Every flag has its own bit "offset" in its order. TL;DR: Append-only list.
  */
 enum Feature: string {
     case TEMPLATE_CASES = "TEMPLATE";

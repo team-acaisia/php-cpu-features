@@ -79,6 +79,34 @@ class FeatureSet {
         return $this->features;
     }
 
+    public function toBinaryString(): mixed
+    {
+        $countTotal = count(Feature::cases());
+
+        // Setup an empty array. 8 bits per byte - so 8 feature flags per byte.
+        $bytes = new \SplFixedArray(intdiv($countTotal, 8));
+        $bytes = array_fill(0, count($bytes)-1, 0);
+
+        // Pack them all
+        $i = -1;
+        foreach (Feature::cases() as $feature) {
+            $i++;
+            if ($this->doesNotHaveFeature($feature)) {
+                continue;
+            }
+            $bit = $i % (8);
+            $byte = intdiv($i, 8);
+            $bytes[$byte] |= 1 << $bit;
+        }
+
+        return pack("C*", ...$bytes); // Return a string (array of bytes / char[])
+    }
+
+    public static function fromBinaryString(string $string): self
+    {
+        return new self();
+    }
+
     public function hasFeature(Feature $feature): bool
     {
         return in_array($feature, $this->features);

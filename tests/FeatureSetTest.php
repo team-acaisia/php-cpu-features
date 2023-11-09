@@ -105,4 +105,17 @@ final class FeatureSetTest extends AbstractTestCase
             yield [$feature];
         }
     }
+
+    public function testBinaryString()
+    {
+        $featureSet = FeatureSet::createFromStringArray(
+            Kernel::v6_6,
+            array_map(fn (Feature $fn) => $fn->value, Feature::cases()) // Create from value string (so all are there)
+        );
+
+        var_dump($featureSet->toBinaryString());
+
+        $featureSet = FeatureSet::createFromString(AbstractTestCase::EXAMPLE_KERNEL, AbstractTestCase::EXAMPLE_STRING);
+        var_dump($featureSet->toBinaryString());
+    }
 }

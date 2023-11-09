@@ -381,7 +381,6 @@ enum Feature: string {
     case X86_SHSTK = "shstk"; // Shadow stack
     case X86_DEBUG_SWAP = "debug_swap"; // AMD SEV-ES full debug state swap support
 
-
     /**
      * This returns the arch of this feature
      * @return Arch
