@@ -71,15 +71,41 @@ class FeatureBench
         $feature->getWord(Kernel::v6_0);
     }
 
+    /**
+     * @ParamProviders("provideSomeFeaturesets")
+     */
+    public function benchBinaryPackingUnpacking(array $data)
+    {
+        /** @var FeatureSet $featureset */
+        $featureset = $data[0];
+        $fs2 = FeatureSet::fromBinaryString($featureset->toBinaryString());
+    }
+
     public function provideArray(): \Generator
     {
         yield explode(' ', AbstractTestCase::EXAMPLE_STRING);
+    }
+
+    public function provideSomeFeaturesets(): \Generator
+    {
+        yield [FeatureSet::createFromString(AbstractTestCase::EXAMPLE_KERNEL, AbstractTestCase::EXAMPLE_STRING)];
+        yield [FeatureSet::createEmpty(Kernel::v6_6)];
+
+        // Random set
+        $arr = [];
+        foreach (Feature::cases() as $feature) {
+            if (random_int(0, 1)) {
+                $arr[] = $feature->value;
+            }
+        }
+        yield [featureSet::createFromStringArray(Kernel::v6_4, $arr)];
     }
 
     public function provideFeatureset(): \Generator
     {
         yield [FeatureSet::createFromString(AbstractTestCase::EXAMPLE_KERNEL, AbstractTestCase::EXAMPLE_STRING)];
     }
+
     public function provideSomeFeatures(): \Generator
     {
         $fset = FeatureSet::createFromString(AbstractTestCase::EXAMPLE_KERNEL, AbstractTestCase::EXAMPLE_STRING);
