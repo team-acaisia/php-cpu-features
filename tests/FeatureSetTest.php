@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Acaisia\CpuFeatures\Tests;
 
 use Acaisia\CpuFeatures\Arch;
+use Acaisia\CpuFeatures\Exception\UnknownBinaryStringException;
 use Acaisia\CpuFeatures\Exception\UnknownInKernelException;
 use Acaisia\CpuFeatures\Feature;
 use Acaisia\CpuFeatures\FeatureSet;
@@ -151,12 +152,18 @@ final class FeatureSetTest extends AbstractTestCase
             }
         }
 
-        $featureSet = featureSet::createFromStringArray(Kernel::v6_4, $arr);
+        $featureSet = FeatureSet::createFromStringArray(Kernel::v6_4, $arr);
 
         $this->assertEquals($featureSet, FeatureSet::fromBinaryString($featureSet->toBinaryString()));
         $this->assertEquals($featureSet->toBinaryString(), FeatureSet::fromBinaryString($featureSet->toBinaryString())->toBinaryString());
 
         // Check if the string is the same
         $this->assertEquals($featureSet->toBinaryString(), FeatureSet::fromBinaryString($featureSet->toBinaryString())->toBinaryString());
+    }
+
+    public function testFailingOnBinaryString()
+    {
+        $this->expectException(UnknownBinaryStringException::class);
+        FeatureSet::fromBinaryString((string) 0b1);
     }
 }
