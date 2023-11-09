@@ -140,4 +140,23 @@ final class FeatureSetTest extends AbstractTestCase
         $this->assertEquals($featureSet, FeatureSet::fromBinaryString($featureSet->toBinaryString()));
         $this->assertEquals($featureSet->toBinaryString(), FeatureSet::fromBinaryString($featureSet->toBinaryString())->toBinaryString());
     }
+
+    public function testBinaryStringRandomFeatures()
+    {
+        // Some features
+        $arr = [];
+        foreach (Feature::cases() as $feature) {
+            if (random_int(0, 1)) {
+                $arr[] = $feature->value;
+            }
+        }
+
+        $featureSet = featureSet::createFromStringArray(Kernel::v6_4, $arr);
+
+        $this->assertEquals($featureSet, FeatureSet::fromBinaryString($featureSet->toBinaryString()));
+        $this->assertEquals($featureSet->toBinaryString(), FeatureSet::fromBinaryString($featureSet->toBinaryString())->toBinaryString());
+
+        // Check if the string is the same
+        $this->assertEquals($featureSet->toBinaryString(), FeatureSet::fromBinaryString($featureSet->toBinaryString())->toBinaryString());
+    }
 }
