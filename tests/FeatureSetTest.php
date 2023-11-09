@@ -106,16 +106,38 @@ final class FeatureSetTest extends AbstractTestCase
         }
     }
 
-    public function testBinaryString()
+    public function testBinaryStringAllFeatures()
     {
+        // All features
         $featureSet = FeatureSet::createFromStringArray(
             Kernel::v6_6,
             array_map(fn (Feature $fn) => $fn->value, Feature::cases()) // Create from value string (so all are there)
         );
+        $this->assertEquals($featureSet, FeatureSet::fromBinaryString($featureSet->toBinaryString()));
+        $this->assertEquals($featureSet->toBinaryString(), FeatureSet::fromBinaryString($featureSet->toBinaryString())->toBinaryString());
+    }
 
-        var_dump($featureSet->toBinaryString());
-
+    public function testBinaryStringSomeFeatures()
+    {
+        // Some features
         $featureSet = FeatureSet::createFromString(AbstractTestCase::EXAMPLE_KERNEL, AbstractTestCase::EXAMPLE_STRING);
-        var_dump($featureSet->toBinaryString());
+
+        // Since the order is not preserved, we can not use assertEquals directly
+        $roundTripped = FeatureSet::fromBinaryString($featureSet->toBinaryString());
+        foreach (Feature::cases() as $item) {
+            $this->assertSame($featureSet->hasFeature($item), $roundTripped->hasFeature($item));
+            $this->assertSame($featureSet->doesNotHaveFeature($item), $roundTripped->doesNotHaveFeature($item));
+        }
+
+        // Check if the string is the same
+        $this->assertEquals($featureSet->toBinaryString(), FeatureSet::fromBinaryString($featureSet->toBinaryString())->toBinaryString());
+    }
+
+    public function testBinaryStringNoFeatures()
+    {
+        // No features
+        $featureSet = FeatureSet::createEmpty(Kernel::v6_6);
+        $this->assertEquals($featureSet, FeatureSet::fromBinaryString($featureSet->toBinaryString()));
+        $this->assertEquals($featureSet->toBinaryString(), FeatureSet::fromBinaryString($featureSet->toBinaryString())->toBinaryString());
     }
 }
