@@ -117,4 +117,23 @@ enum Kernel: string {
             26 => self::v6_6,
         };
     }
+
+    /**
+     * Create one from a linux string (like "5.15.0-92-generic")
+     * @param string $releaseString
+     * @return self
+     */
+    public static function fromReleaseString(string $releaseString): self
+    {
+        preg_match('~(([0-9]\.[0-9]{1,3})\.[0-9])\-([0-9]+)\-(.*)~', $releaseString, $matches);
+        if (count($matches) != 5) {
+            throw new UnknownKernelException('Could not map "' . $releaseString . '" to a known kernel.');
+        }
+
+        try {
+            return Kernel::from($matches[2]);
+        } catch (\ValueError $e) {
+            throw new UnknownKernelException('Could not map "' . $releaseString . '" to a known kernel.');
+        }
+    }
 }
