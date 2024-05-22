@@ -38,6 +38,10 @@ enum Kernel: string {
     case v6_4 = '6.4';
     case v6_5 = '6.5';
     case v6_6 = '6.6';
+    case v6_7 = '6.7';
+    case v6_8 = '6.8';
+    case v6_9 = '6.9';
+    case v6_10 = '6.10';
 
     /**
      * Returns the byte used for serialisation
@@ -73,6 +77,10 @@ enum Kernel: string {
             self::v6_4 => 24,
             self::v6_5 => 25,
             self::v6_6 => 26,
+            self::v6_7 => 27,
+            self::v6_8 => 28,
+            self::v6_9 => 29,
+            self::v6_10 => 30,
         };
     }
 
@@ -83,7 +91,7 @@ enum Kernel: string {
      */
     public static function fromByte(int $byte): self
     {
-        if ($byte < 0 || $byte > 26) {
+        if ($byte < 0 || $byte > 30) {
             throw new UnknownKernelException('Byte value ' . $byte . ' is not mapped to a known kernel.');
         }
 
@@ -115,6 +123,10 @@ enum Kernel: string {
             24 => self::v6_4,
             25 => self::v6_5,
             26 => self::v6_6,
+            27 => self::v6_7,
+            28 => self::v6_8,
+            29 => self::v6_9,
+            30 => self::v6_10,
         };
     }
 
