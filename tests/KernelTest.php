@@ -16,7 +16,7 @@ final class KernelTest extends AbstractTestCase
 
     public function testUnknownByteTooHigh() {
         $this->expectException(UnknownKernelException::class);
-        Kernel::fromByte(27);
+        Kernel::fromByte(31);
     }
 
     /**
@@ -41,6 +41,7 @@ final class KernelTest extends AbstractTestCase
             [Kernel::v5_13, '  5.13.0-4565-some-build-with-longer-name  '],
             [Kernel::v6_6, '6.6.0-184-another'],
             [Kernel::v5_15, '5.15.0-92-generic'],
+            [Kernel::v6_8, '6.8.0-31-generic'],
             [null, '5.452515.0-92-generic'],
             [null, '5.999.0-92-generic'],
             [null, '5.99.0-92-generic'],
