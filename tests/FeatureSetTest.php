@@ -91,7 +91,24 @@ final class FeatureSetTest extends AbstractTestCase
         if ($feature == Feature::X86_RETPOLINE_AMD ||
             $feature == Feature::X86_INVPCID_SINGLE ||
             $feature == Feature::X86_MFENCE_RDTSC ||
-            $feature == Feature::X86_K7
+            $feature == Feature::X86_K7 ||
+            $feature == Feature::X86_CLEAR_BHB_LOOP_ON_VMEXIT ||
+            $feature == Feature::X86_CLEAR_BHB_HW ||
+            $feature == Feature::X86_CLEAR_BHB_LOOP ||
+            $feature == Feature::X86_AMD_LBR_PMC_FREEZE ||
+            $feature == Feature::X86_WRMSR_XX_BASE_NS ||
+            $feature == Feature::X86_WRMSRNS ||
+            $feature == Feature::X86_FRED ||
+            $feature == Feature::X86_ZEN1 ||
+            $feature == Feature::X86_ZEN2 ||
+            $feature == Feature::X86_ZEN3 ||
+            $feature == Feature::X86_ZEN4 ||
+            $feature == Feature::X86_ZEN5 ||
+            $feature == Feature::X86_CLEAR_CPU_BUF ||
+            $feature == Feature::X86_BHI_CTRL ||
+            $feature == Feature::X86_SEV_SNP ||
+            $feature == Feature::X86_APIC_MSRS_FENCE ||
+            $feature == Feature::X86_TDX_HOST_PLATFORM
         ) {
             $this->expectException(UnknownInKernelException::class);
         }
@@ -103,7 +120,7 @@ final class FeatureSetTest extends AbstractTestCase
     public static function provideAllFeatures(): \Generator
     {
         foreach (Feature::cases() as $feature) {
-            yield [$feature];
+            yield $feature->value => [$feature];
         }
     }
 
