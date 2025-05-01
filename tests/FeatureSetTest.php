@@ -108,6 +108,16 @@ final class FeatureSetTest extends AbstractTestCase
             $feature == Feature::X86_BHI_CTRL ||
             $feature == Feature::X86_SEV_SNP ||
             $feature == Feature::X86_APIC_MSRS_FENCE ||
+            $feature == Feature::X86_SHA512 ||
+            $feature == Feature::X86_SM3 ||
+            $feature == Feature::X86_SM4 ||
+            $feature == Feature::X86_AMD_IBPB_RET ||
+            $feature == Feature::X86_HWP_HIGHEST_PERF_CHANGE ||
+            $feature == Feature::X86_RMPREAD ||
+            $feature == Feature::X86_SEGMENTED_RMP ||
+            $feature == Feature::X86_SVSM ||
+            $feature == Feature::X86_HV_INUSE_WR_ALLOWED ||
+            $feature == Feature::X86_SRSO_USER_KERNEL_NO ||
             $feature == Feature::X86_TDX_HOST_PLATFORM
         ) {
             $this->expectException(UnknownInKernelException::class);
