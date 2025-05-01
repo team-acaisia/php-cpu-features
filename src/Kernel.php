@@ -42,6 +42,10 @@ enum Kernel: string {
     case v6_8 = '6.8';
     case v6_9 = '6.9';
     case v6_10 = '6.10';
+    case v6_11 = '6.11';
+    case v6_12 = '6.12';
+    case v6_13 = '6.13';
+    case v6_14 = '6.14';
 
     /**
      * Returns the byte used for serialisation
