@@ -26,6 +26,21 @@ final class TestUnknownValueDoesNotThrowExceptionTest extends AbstractTestCase
         restore_error_handler();
     }
 
+    public function testForwardCompatibilityOtherMethod(): void {
+
+        set_error_handler(static function (int $errno, string $errstr): never {
+            throw new \Exception($errstr, $errno);
+        }, E_USER_WARNING);
+
+
+        // phpunit 10.0
+        $this->expectExceptionMessage('"ibpb_exit_to_user" is not a valid backing value for enum Acaisia\CpuFeatures\Feature');
+
+        FeatureSet::createFromStringArray(Kernel::v6_2, ['ibpb_exit_to_user']);
+
+        restore_error_handler();
+    }
+
     public function testExceptionOnNewSettings(): void {
         $this->expectException(\ValueError::class);
         FeatureSet::createFromString(Kernel::v6_2, 'ibpb_exit_to_user', true);

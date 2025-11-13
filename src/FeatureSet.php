@@ -38,10 +38,19 @@ class FeatureSet {
      */
     public static function createFromString(Kernel $kernel, string $features, bool $throwOnMismatch = false): self
     {
+        return self::createFromStringArray($kernel, explode(' ', $features), $throwOnMismatch);
+    }
+
+    /**
+     * @param Kernel $kernel
+     * @param array $features Formatted in the form of ["fpu", "vme", (...)]
+     * @return self
+     */
+    public static function createFromStringArray(Kernel $kernel, array $features, bool $throwOnMismatch = false): self
+    {
         $self = new self();
         $self->kernel = $kernel;
-
-        foreach (explode(' ', $features) as $ftr) {
+        foreach ($features as $ftr) {
             try {
                 $self->features[] = Feature::from($ftr);
             } catch (\ValueError $e) {
@@ -51,22 +60,6 @@ class FeatureSet {
                     trigger_error($e->getMessage(), E_USER_WARNING);
                 }
             }
-        }
-
-        return $self;
-    }
-
-    /**
-     * @param Kernel $kernel
-     * @param array $features Formatted in the form of ["fpu", "vme", (...)]
-     * @return self
-     */
-    public static function createFromStringArray(Kernel $kernel, array $features): self
-    {
-        $self = new self();
-        $self->kernel = $kernel;
-        foreach ($features as $ftr) {
-            $self->features[] = Feature::from($ftr);
         }
 
         return $self;
