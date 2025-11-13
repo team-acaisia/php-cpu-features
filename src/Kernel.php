@@ -46,6 +46,10 @@ enum Kernel: string {
     case v6_12 = '6.12';
     case v6_13 = '6.13';
     case v6_14 = '6.14';
+    case v6_15 = '6.15';
+    case v6_16 = '6.16';
+    case v6_17 = '6.17';
+    case v6_18 = '6.18';
 
     /**
      * Returns the byte used for serialisation
@@ -85,6 +89,14 @@ enum Kernel: string {
             self::v6_8 => 28,
             self::v6_9 => 29,
             self::v6_10 => 30,
+            self::v6_11 => 31,
+            self::v6_12 => 32,
+            self::v6_13 => 33,
+            self::v6_14 => 34,
+            self::v6_15 => 35,
+            self::v6_16 => 36,
+            self::v6_17 => 37,
+            self::v6_18 => 38,
         };
     }
 
@@ -131,6 +143,14 @@ enum Kernel: string {
             28 => self::v6_8,
             29 => self::v6_9,
             30 => self::v6_10,
+            31 => self::v6_11,
+            32 => self::v6_12,
+            33 => self::v6_13,
+            34 => self::v6_14,
+            35 => self::v6_15,
+            36 => self::v6_16,
+            37 => self::v6_17,
+            38 => self::v6_18,
         };
     }
 
