@@ -34,6 +34,7 @@ class FeatureSet {
     /**
      * @param Kernel $kernel
      * @param string $features Formatted in the form of "fpu vme de msr" etc.
+     * @param bool $throwOnMismatch Throw exception if given feature was not found (e.g. in case of new kernels)
      * @return self
      */
     public static function createFromString(Kernel $kernel, string $features, bool $throwOnMismatch = false): self
@@ -44,6 +45,7 @@ class FeatureSet {
     /**
      * @param Kernel $kernel
      * @param array $features Formatted in the form of ["fpu", "vme", (...)]
+     * @param bool $throwOnMismatch Throw exception if given feature was not found (e.g. in case of new kernels)
      * @return self
      */
     public static function createFromStringArray(Kernel $kernel, array $features, bool $throwOnMismatch = false): self
@@ -56,9 +58,7 @@ class FeatureSet {
             } catch (\ValueError $e) {
                 if ($throwOnMismatch) {
                     throw $e;
-                } else {
-                    trigger_error($e->getMessage(), E_USER_WARNING);
-                }
+                } // else trigger warning maybe?
             }
         }
 
