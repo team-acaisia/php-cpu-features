@@ -36,13 +36,21 @@ class FeatureSet {
      * @param string $features Formatted in the form of "fpu vme de msr" etc.
      * @return self
      */
-    public static function createFromString(Kernel $kernel, string $features): self
+    public static function createFromString(Kernel $kernel, string $features, bool $throwOnMismatch = false): self
     {
         $self = new self();
         $self->kernel = $kernel;
 
         foreach (explode(' ', $features) as $ftr) {
-            $self->features[] = Feature::from($ftr);
+            try {
+                $self->features[] = Feature::from($ftr);
+            } catch (\ValueError $e) {
+                if ($throwOnMismatch) {
+                    throw $e;
+                } else {
+                    trigger_error($e->getMessage(), E_USER_WARNING);
+                }
+            }
         }
 
         return $self;
